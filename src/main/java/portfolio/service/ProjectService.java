@@ -1,4 +1,4 @@
-package com.omwan.portfolio.service;
+package portfolio.service;
 
 import com.omwan.portfolio.domain.ProjectDTO;
 

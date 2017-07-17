@@ -1,4 +1,4 @@
-package com.omwan.portfolio.mongo.document;
+package portfolio.mongo.document;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,4 +1,4 @@
-package com.omwan.portfolio.mongo.repository;
+package portfolio.mongo.repository;
 
 import com.omwan.portfolio.mongo.document.Project;
 

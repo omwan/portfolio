@@ -1,4 +1,4 @@
-package com.omwan.portfolio.util;
+package portfolio.util;
 
 import com.omwan.portfolio.domain.ProjectDTO;
 import com.omwan.portfolio.mongo.document.Project;

@@ -1,4 +1,4 @@
-package com.omwan.portfolio.domain;
+package portfolio.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

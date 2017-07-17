@@ -1,4 +1,4 @@
-package com.omwan.portfolio.controller;
+package portfolio.controller;
 
 import com.omwan.portfolio.domain.ProjectDTO;
 import com.omwan.portfolio.service.ProjectService;
