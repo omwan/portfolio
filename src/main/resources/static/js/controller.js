@@ -3,13 +3,13 @@
  */
 app.controller('controller', ['$scope', '$http', function ($scope, $http) {
     $scope.title = 'Olivia Wan, Project Portfolio';
-    $http.get('http://localhost:8080/projects').success(function (data) {
+    $http.get('/projects').success(function (data) {
         $scope.projects = _setProjects(data);
         console.log($scope.projects);
     });
 
     $scope.filterByPublic = function() {
-        $http.get('http://localhost:8080/projects?isPublic=true').success(function (data) {
+        $http.get('/projects?isPublic=true').success(function (data) {
             $scope.projects = _setProjects(data);
             console.log($scope.projects);
         });
