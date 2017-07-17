@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
+ * Class to manage data in project collection.
+ *
  * Created by olivi on 07/16/2017.
  */
 @Repository

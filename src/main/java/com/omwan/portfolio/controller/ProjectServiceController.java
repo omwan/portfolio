@@ -10,14 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.Map;
 
 /**
+ * Controller to retrieve project information from mongo.
+ *
  * Created by olivi on 07/16/2017.
  */
-@Controller
+@RestController
+@RequestMapping("/api")
 public class ProjectServiceController {
 
   @Autowired

@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Implementation of service to retrieve project information from mongo.
+ *
  * Created by olivi on 07/16/2017.
  */
 @Service

@@ -6,7 +6,9 @@ import com.omwan.portfolio.mongo.document.Project;
 import org.springframework.beans.BeanUtils;
 
 /**
+ * Util methods for project services.
  * todo replace these with getter/setter calls
+ *
  * Created by olivi on 07/16/2017.
  */
 public class ProjectUtils {

@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Object to represent documents from MongoDB project collection.
+ *
  * Created by olivi on 07/16/2017.
  */
 @Document(collection = "project")

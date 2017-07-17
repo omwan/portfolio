@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Service to retrieve project information from mongo.
+ *
  * Created by olivi on 07/16/2017.
  */
 public interface ProjectService {

@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 
 /**
+ * Domain object to represent project information.
+ *
  * Created by olivi on 07/16/2017.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
