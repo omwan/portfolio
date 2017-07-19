@@ -1,0 +1,68 @@
+@mixin transition($time) {
+    -webkit-transition: all $time ease;
+    -moz-transition: all $time ease;
+    -o-transition: all $time ease;
+    transition: all $time ease-in-out;
+}
+
+$transition-time: .3s;
+body {
+    background: #eee;
+    a {
+        @include transition($transition-time);
+    }
+    h1 {
+        text-align: center;
+    }
+    h2 {
+        font-size: 20px;
+        text-align: center;
+    }
+}
+
+.card-title i {
+    font-size:15px;
+    color:#555;
+}
+
+.project-description {
+    color:#000;
+    font-size:15px;
+}
+
+.project-notes {
+    padding-top:10px;
+    color: #888;
+    font-size: 14px;
+}
+
+.category {
+    padding-top:20px;
+}
+
+.buttons {
+    border-top: 1px solid #eee;
+    div {
+        overflow: hidden;
+        margin: 0px 0px 3px 0px;
+    }
+    .tag {
+        float: left;
+        padding: 3px 10px;
+        color: #fff;
+        font-size: 12px;
+        margin-right: 3px;
+    }
+    .tech {
+        @extend .tag;
+        background: #888;
+    }
+    .link {
+        @extend .tag;
+        background: #333;
+    }
+    .link:hover {
+        color: #333;
+        background: #eee;
+    }
+}

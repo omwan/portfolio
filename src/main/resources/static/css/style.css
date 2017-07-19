@@ -1,0 +1,49 @@
+body {
+  background: #eee; }
+  body a {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease-in-out; }
+  body h1 {
+    text-align: center; }
+  body h2 {
+    font-size: 20px;
+    text-align: center; }
+
+.card-title i {
+  font-size: 15px;
+  color: #555; }
+
+.project-description {
+  color: #000;
+  font-size: 15px; }
+
+.project-notes {
+  padding-top: 10px;
+  color: #888;
+  font-size: 14px; }
+
+.category {
+  padding-top: 20px; }
+
+.buttons {
+  border-top: 1px solid #eee; }
+  .buttons div {
+    overflow: hidden;
+    margin: 0px 0px 3px 0px; }
+  .buttons .tag, .buttons .tech, .buttons .link {
+    float: left;
+    padding: 3px 10px;
+    color: #fff;
+    font-size: 12px;
+    margin-right: 3px; }
+  .buttons .tech {
+    background: #888; }
+  .buttons .link {
+    background: #333; }
+  .buttons .link:hover {
+    color: #333;
+    background: #eee; }
+
+/*# sourceMappingURL=style.css.map */
