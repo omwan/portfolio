@@ -16,7 +16,7 @@ public class ProjectDTO {
 
   private String id;
   private String title;
-  private String category;
+  private ProjectCategory category;
   private String description;
   private String notes;
   private List<String> technologies;
@@ -51,11 +51,11 @@ public class ProjectDTO {
     this.title = title;
   }
 
-  public String getCategory() {
+  public ProjectCategory getCategory() {
     return category;
   }
 
-  public void setCategory(String category) {
+  public void setCategory(ProjectCategory category) {
     this.category = category;
   }
 

@@ -14,7 +14,19 @@ public interface ProjectService {
 
   Map<String, List<ProjectDTO>> getProjects(String category, boolean isPublic);
 
+  /**
+   * Save the given project to Mongo.
+   *
+   * @param project project to save
+   * @return saved project
+   */
   ProjectDTO saveProject(ProjectDTO project);
 
+  /**
+   * Soft delete the given project from Mongo.
+   *
+   * @param id id of project to delete
+   * @return deleted project
+   */
   ProjectDTO deleteProject(String id);
 }

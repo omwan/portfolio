@@ -4,7 +4,6 @@ import com.omwan.portfolio.domain.ProjectDTO;
 import com.omwan.portfolio.service.ProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

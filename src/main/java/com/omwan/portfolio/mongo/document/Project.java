@@ -1,5 +1,7 @@
 package com.omwan.portfolio.mongo.document;
 
+import com.omwan.portfolio.domain.ProjectCategory;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -17,7 +19,7 @@ public class Project {
   @Id
   private String id;
   private String title;
-  private String category;
+  private ProjectCategory category;
   private String description;
   private String notes;
   private List<String> technologies;
@@ -48,11 +50,11 @@ public class Project {
     this.title = title;
   }
 
-  public String getCategory() {
+  public ProjectCategory getCategory() {
     return category;
   }
 
-  public void setCategory(String category) {
+  public void setCategory(ProjectCategory category) {
     this.category = category;
   }
 
