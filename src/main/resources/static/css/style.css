@@ -46,4 +46,22 @@ body {
     color: #333;
     background: #eee; }
 
+textarea.materialize-textarea {
+  padding: 5px 0px; }
+
+.add-entry {
+  position: fixed;
+  bottom: 30px;
+  right: 30px; }
+
+.modal .modal-footer {
+  height: 60px; }
+  .modal .modal-footer .btn,
+  .modal .modal-footer .btn-flat {
+    margin: 8px 4px; }
+.modal .modal-content h4 {
+  padding-top: 20px; }
+.modal .row {
+  margin: 0px; }
+
 /*# sourceMappingURL=style.css.map */

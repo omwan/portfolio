@@ -60,7 +60,7 @@ public class ProjectServiceImplTest {
   public void testSaveProject() throws Exception {
     final ProjectDTO projectToSave = new ProjectDTO();
     projectToSave.setTitle("project title");
-    projectToSave.setCategory(ProjectCategory.WORK);
+    projectToSave.setCategory(ProjectCategory.WORK.toString());
     final Project projectAsDocument = ProjectUtils.convertFromDomain(projectToSave);
     mockConvertFromDomain(projectAsDocument);
 
@@ -95,13 +95,13 @@ public class ProjectServiceImplTest {
     String title = "project title";
     ProjectCategory category = ProjectCategory.WORK;
     projectToDelete.setTitle(title);
-    projectToDelete.setCategory(category);
+    projectToDelete.setCategory(category.toString());
     projectToDelete.setId("1");
     projectToDelete.setDeleted(false);
 
     Project projectAsDocument = new Project();
     projectAsDocument.setTitle(title);
-    projectAsDocument.setCategory(category);
+    projectAsDocument.setCategory(category.toString());
     projectAsDocument.setId("1");
     mockConvertFromDomain(projectAsDocument);
 

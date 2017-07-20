@@ -10,7 +10,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -95,11 +95,14 @@ public class ProjectServiceImpl implements ProjectService {
    * @param project project to add to map
    */
   private void addProjectToMap(Map<String, List<ProjectDTO>> map, ProjectDTO project) {
-    String category = project.getCategory().toString();
+    String category = project.getCategory();
     if (map.containsKey(category)) {
-      map.get(category).add(project);
+      List<ProjectDTO> projects = map.get(category);
+      projects.add(project);
     } else {
-      map.put(category, Collections.singletonList(project));
+      List<ProjectDTO> projects = new ArrayList<>();
+      projects.add(project);
+      map.put(category, projects);
     }
   }
 }

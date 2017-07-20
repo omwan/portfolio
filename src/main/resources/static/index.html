@@ -3,28 +3,28 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-
-    <!--jQuery-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <!--angular scripts-->
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
-
-    <!--mobile scaling-->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!--materialize-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/css/materialize.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css">
+    <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-    <!--main stylesheet-->
-    <link rel="stylesheet" href="css/style.css">
+    <!-- TODO: Waiting for https://github.com/Dogfalo/materialize/pull/3570 to become part of Materialize, before we can upgrade to jQuery 3 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
+
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
+
+    <!-- App -->
+    <script type="text/javascript" src="js/app.js"></script>
 </head>
 
 <body ng-app="app" ng-controller="controller">
+
     <div class="container">
 
         <h1>{{title}}</h1>
@@ -63,6 +63,92 @@
 
     </div>
 
+    <div class="row" ng-controller="ModalController">
+        <!-- Modal Trigger -->
+        <div class="col s4">
+            <a class="add-entry btn-floating btn-large waves-effect waves-light red" ng-click="openModal = true" data-target='demoModal' modal open="openModal">
+                <i class="material-icons">add</i>
+            </a>
+        </div>
+        <!-- Modal Structure -->
+        <div id="demoModal" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <div class="row">
+                    <form class="col s12">
+                        <div class="row">
+                            <h4 class="col s12">Add New Project</h4>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 m6" input-field>
+                                <input type="text" ng-model="project.title">
+                                <label>Title</label>
+                            </div>
+                            <div class="col s12 m6" style="margin-top:10px;">
+                                <div style="margin-top:-10px;" input-field >
+                                    <select material-select ng-model="project.category">
+                                        <option value="" disabled selected>Category</option>
+                                        <option value="WORK">work</option>
+                                        <option value="CLASS">class</option>
+                                        <option value="EXTRACURRICULAR">extracurricular</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12" input-field>
+                                <textarea class="materialize-textarea" ng-model="project.description"></textarea>
+                                <label>Description</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12" input-field>
+                                <textarea class="materialize-textarea" ng-model="project.notes"></textarea>
+                                <label>Notes</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s6" input-field>
+                                <input type="text" ng-model="project.github">
+                                <label>GitHub</label>
+                            </div>
+                            <div class="col s6" style="padding-top:34px;">
+                                <input type="checkbox" class="filled-in" id="filled-in-box" ng-model="project.public"/>
+      <label for="filled-in-box">Public</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 m6" input-field>
+                                <input type="text" ng-model="project.link">
+                                <label>Link</label>
+                            </div>
+                            <div class="col s12 m6" input-field>
+                                <input type="text" ng-model="project.technologies">
+                                <label>Technologies</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col s12 m6" input-field>
+                                <input type="text" ng-model="project.startDate">
+                                <label>Start Date</label>
+                            </div>
+                            <div class="col s12 m6" input-field>
+                                <input type="text" ng-model="project.endDate">
+                                <label>End Date</label>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-action waves-effect waves-green btn" ng-click="saveProject()">save</a>
+                <a href="javascript:void(0)" class="modal-action modal-close waves-effect waves-green btn-flat">cancel</a>
+            </div>
+        </div>
+    </div>
+
     <!--
     <footer class="page-footer">
         <div class="container">
@@ -84,6 +170,7 @@
 
     <!--angular controllers-->
     <script src="js/controller.js"></script>
+    <script src="js/modal-controller.js"></script>
 </body>
 
 </html>

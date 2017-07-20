@@ -21,23 +21,23 @@ body {
 }
 
 .card-title i {
-    font-size:15px;
-    color:#555;
+    font-size: 15px;
+    color: #555;
 }
 
 .project-description {
-    color:#000;
-    font-size:15px;
+    color: #000;
+    font-size: 15px;
 }
 
 .project-notes {
-    padding-top:10px;
+    padding-top: 10px;
     color: #888;
     font-size: 14px;
 }
 
 .category {
-    padding-top:20px;
+    padding-top: 20px;
 }
 
 .buttons {
@@ -64,5 +64,31 @@ body {
     .link:hover {
         color: #333;
         background: #eee;
+    }
+}
+
+textarea.materialize-textarea {
+    padding: 5px 0px;
+}
+
+.add-entry {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+}
+
+.modal {
+    .modal-footer {
+        height: 60px;
+        .btn,
+        .btn-flat {
+            margin: 8px 4px;
+        }
+    }
+    .modal-content h4 {
+        padding-top: 20px;
+    }
+    .row {
+        margin: 0px;
     }
 }
