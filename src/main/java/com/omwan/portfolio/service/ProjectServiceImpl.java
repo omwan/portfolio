@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Implementation of service to retrieve project information from mongo.
@@ -28,28 +29,43 @@ public class ProjectServiceImpl implements ProjectService {
 
   @Override
   @Transactional(readOnly = true)
-  public Map<String, List<ProjectDTO>> getProjects(String category, boolean isPublic) {
-    List<Project> projects;
-    if (category.equals("")) {
-      if (isPublic) {
-        projects = projectRepository.findByIsPublic(isPublic);
-      } else {
-        projects = projectRepository.findAll();
-      }
-    } else {
-      if (isPublic) {
-        projects = projectRepository.findByCategoryAndIsPublic(category, isPublic);
-      } else {
-        projects = projectRepository.findByCategory(category);
-      }
-    }
+  public Map<String, List<ProjectDTO>> getProjects(boolean publicOnly) {
+    List<Project> projects = projectRepository.findByIsDeleted(false);
+    Map<String, List<ProjectDTO>> mappedProjects = new HashMap<>();
+    filterAndConvertDocuments(projects, publicOnly)
+            .forEach(project -> addProjectToMap(mappedProjects, project));
+    return mappedProjects;
+  }
 
+  @Override
+  public List<ProjectDTO> getProjectsForCategory(String category, boolean publicOnly) {
+    List<Project> projects = projectRepository.findByCategoryAndIsDeleted(category.toUpperCase(), false);
+    return filterAndConvertDocuments(projects, publicOnly);
+  }
+
+  @Override
+  public Map<String, List<ProjectDTO>> getDeletedProjects() {
+    List<Project> projects = projectRepository.findByIsDeleted(true);
     Map<String, List<ProjectDTO>> mappedProjects = new HashMap<>();
     projects.stream()
             .map(ProjectUtils::convertFromDocument)
             .forEach(project -> addProjectToMap(mappedProjects, project));
-
     return mappedProjects;
+  }
+
+  @Override
+  public List<ProjectDTO> getDeletedProjectsForCategory(String category) {
+    List<Project> projects = projectRepository.findByCategoryAndIsDeleted(category.toUpperCase(), true);
+    return projects.stream()
+            .map(ProjectUtils::convertFromDocument)
+            .collect(Collectors.toList());
+  }
+
+  private List<ProjectDTO> filterAndConvertDocuments(List<Project> projects, boolean publicOnly) {
+    return projects.stream()
+            .filter(project -> !publicOnly || project.isPublic())
+            .map(ProjectUtils::convertFromDocument)
+            .collect(Collectors.toList());
   }
 
   /**
@@ -80,12 +96,21 @@ public class ProjectServiceImpl implements ProjectService {
   @Override
   @Transactional
   public ProjectDTO deleteProject(String id) {
-    Project projectToDelete = projectRepository.findOne(id);
-    if (projectToDelete == null) {
+    return updateProjectDeleted(id, true);
+  }
+
+  @Override
+  public ProjectDTO restoreProject(String id) {
+    return updateProjectDeleted(id, false);
+  }
+
+  private ProjectDTO updateProjectDeleted(String id, boolean deleted) {
+    Project projectToRestore = projectRepository.findOne(id);
+    if (projectToRestore == null) {
       throw new IllegalArgumentException("no project found for the given ID");
     }
-    projectToDelete.setDeleted(true);
-    return ProjectUtils.convertFromDocument(projectRepository.save(projectToDelete));
+    projectToRestore.setDeleted(deleted);
+    return ProjectUtils.convertFromDocument(projectRepository.save(projectToRestore));
   }
 
   /**

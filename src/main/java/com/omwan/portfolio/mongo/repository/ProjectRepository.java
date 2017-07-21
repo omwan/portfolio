@@ -15,9 +15,7 @@ import java.util.List;
 @Repository
 public interface ProjectRepository extends MongoRepository<Project, String> {
 
-  List<Project> findByCategory(String category);
+  List<Project> findByCategoryAndIsDeleted(String category, boolean isDeleted);
 
-  List<Project> findByCategoryAndIsPublic(String category, boolean isPublic);
-
-  List<Project> findByIsPublic(boolean isPublic);
+  List<Project> findByIsDeleted(boolean isDeleted);
 }

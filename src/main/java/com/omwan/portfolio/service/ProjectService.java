@@ -12,7 +12,13 @@ import java.util.Map;
  */
 public interface ProjectService {
 
-  Map<String, List<ProjectDTO>> getProjects(String category, boolean isPublic);
+  Map<String, List<ProjectDTO>> getProjects(boolean publicOnly);
+
+  List<ProjectDTO> getProjectsForCategory(String category, boolean publicOnly);
+
+  Map<String, List<ProjectDTO>> getDeletedProjects();
+
+  List<ProjectDTO> getDeletedProjectsForCategory(String category);
 
   /**
    * Save the given project to Mongo.
@@ -29,4 +35,12 @@ public interface ProjectService {
    * @return deleted project
    */
   ProjectDTO deleteProject(String id);
+
+  /**
+   * Restore the given project.
+   *
+   * @param id id of project to restore
+   * @return restored project
+   */
+  ProjectDTO restoreProject(String id);
 }

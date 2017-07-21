@@ -4,6 +4,7 @@ import com.omwan.portfolio.domain.ProjectDTO;
 import com.omwan.portfolio.service.ProjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -28,9 +29,25 @@ public class ProjectServiceController {
 
   @RequestMapping(value = "/projects", method = RequestMethod.GET)
   @ResponseBody
-  public Map<String, List<ProjectDTO>> getProjects(@RequestParam(required = false, value = "category", defaultValue = "") String category,
-                                                   @RequestParam(required = false, value = "isPublic", defaultValue = "false") boolean isPublic) {
-    return projectService.getProjects(category, isPublic);
+  public Map<String, List<ProjectDTO>> getProjects(@RequestParam(required = false, value = "publicOnly", defaultValue = "false") boolean publicOnly) {
+    return projectService.getProjects(publicOnly);
+  }
+
+  @RequestMapping(value = "/projects/{category}", method = RequestMethod.GET)
+  @ResponseBody
+  public List<ProjectDTO> getProjectsForCategory(@PathVariable(value = "category") String category,
+                                                 @RequestParam(required = false, value = "publicOnly", defaultValue = "false") boolean publicOnly) {
+    return projectService.getProjectsForCategory(category, publicOnly);
+  }
+
+  @RequestMapping(value = "/projects/deletedprojects", method = RequestMethod.GET)
+  public Map<String, List<ProjectDTO>> getDeletedProjects() {
+    return projectService.getDeletedProjects();
+  }
+
+  @RequestMapping(value = "/projects/deletedprojects/{category}", method = RequestMethod.GET)
+  public List<ProjectDTO> getDeletedProjectsForCategory(@PathVariable(value = "category") String category) {
+    return projectService.getDeletedProjectsForCategory(category);
   }
 
   @RequestMapping(value = "/projects", method = RequestMethod.POST)
@@ -43,5 +60,11 @@ public class ProjectServiceController {
   @ResponseBody
   public ProjectDTO deleteProject(@RequestParam(value = "id") String id) {
     return projectService.deleteProject(id);
+  }
+
+  @RequestMapping(value = "/projects", method = RequestMethod.PUT)
+  @ResponseBody
+  public ProjectDTO restoreProject(@RequestParam(value = "id") String id) {
+    return projectService.restoreProject(id);
   }
 }
