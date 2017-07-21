@@ -8,6 +8,9 @@
 $transition-time: .3s;
 body {
     background: #eee;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
     a {
         @include transition($transition-time);
     }
@@ -20,75 +23,80 @@ body {
     }
 }
 
-.card-title i {
-    font-size: 15px;
-    color: #555;
-}
-
-.project-description {
-    color: #000;
-    font-size: 15px;
-}
-
-.project-notes {
-    padding-top: 10px;
-    color: #888;
-    font-size: 14px;
-}
-
-.category {
-    padding-top: 20px;
-}
-
-.buttons {
-    border-top: 1px solid #eee;
-    div {
-        overflow: hidden;
-        margin: 0px 0px 3px 0px;
-    }
-    .tag {
-        float: left;
-        padding: 3px 10px;
-        color: #fff;
-        font-size: 12px;
-        margin-right: 3px;
-    }
-    .tech {
-        @extend .tag;
-        background: #888;
-    }
-    .link {
-        @extend .tag;
-        background: #333;
-    }
-    .link:hover {
-        color: #333;
-        background: #eee;
-    }
-}
-
-textarea.materialize-textarea {
-    padding: 5px 0px;
-}
-
-.add-entry {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-}
-
-.modal {
-    .modal-footer {
-        height: 60px;
-        .btn,
-        .btn-flat {
-            margin: 8px 4px;
+header {
+    .nav-wrapper {
+        padding-left: 10px;
+        padding-right: 10px;
+        #filter-buttons a {
+            margin: 0 5px;
+            padding-left: 10px;
+            padding-right: 10px;
         }
     }
-    .modal-content h4 {
+}
+
+main {
+    flex: 1 0 auto;
+    .card-title i {
+        font-size: 15px;
+        color: #555;
+    }
+    .project-description {
+        font-size: 15px;
+    }
+    .project-notes {
+        padding-top: 10px;
+        font-size: 14px;
+    }
+    .category {
         padding-top: 20px;
     }
-    .row {
-        margin: 0px;
+    .buttons {
+        border-top: 1px solid #eee;
+        div {
+            overflow: hidden;
+        }
+        .tag {
+            float: left;
+            padding: 3px 10px;
+            color: #fff;
+            font-size: 12px;
+            margin: 0 3px 3px 0;
+        }
+        .tech {
+            @extend .tag;
+            background: #888;
+        }
+        .link {
+            @extend .tag;
+            background: #333;
+        }
+        .link:hover {
+            color: #333;
+            background: #eee;
+        }
+    }
+    textarea.materialize-textarea {
+        padding: 5px 0px;
+    }
+    .add-entry {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+    }
+    .modal {
+        .modal-footer {
+            height: 60px;
+            .btn,
+            .btn-flat {
+                margin: 8px 4px;
+            }
+        }
+        .modal-content h4 {
+            padding-top: 20px;
+        }
+        .row {
+            margin: 0px;
+        }
     }
 }

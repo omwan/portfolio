@@ -7,6 +7,8 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
     var toastLife = 1500;
 
     $scope.project = {
+        title: '',
+        category: '',
         public: true,
         technologies: ''
     };
@@ -14,7 +16,12 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
     $scope.technologies = '';
 
     $scope.saveProject = function () {
-        $scope.project.technologies = $scope.project.technologies.split(",");
+        if ($scope.project.technologies == '') {
+            $scope.project.technologies = null;
+        } else {
+            $scope.project.technologies = $scope.project.technologies.split(",");
+        }
+
         $http.post(saveProjectUrl, $scope.project).success(function (data) {
             Materialize.toast(saveProjectsSuccess, toastLife);
             $scope.openModal = false;
@@ -22,4 +29,6 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
             Materialize.toast(saveProjectsError, toastLife);
         });
     };
+
+//    $scope.hasRequiredFields = false;
 }]);

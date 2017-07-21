@@ -1,5 +1,8 @@
 body {
-  background: #eee; }
+  background: #eee;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column; }
   body a {
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
@@ -11,57 +14,57 @@ body {
     font-size: 20px;
     text-align: center; }
 
-.card-title i {
-  font-size: 15px;
-  color: #555; }
+header .nav-wrapper {
+  padding-left: 10px;
+  padding-right: 10px; }
+  header .nav-wrapper #filter-buttons a {
+    margin: 0 5px;
+    padding-left: 10px;
+    padding-right: 10px; }
 
-.project-description {
-  color: #000;
-  font-size: 15px; }
-
-.project-notes {
-  padding-top: 10px;
-  color: #888;
-  font-size: 14px; }
-
-.category {
-  padding-top: 20px; }
-
-.buttons {
-  border-top: 1px solid #eee; }
-  .buttons div {
-    overflow: hidden;
-    margin: 0px 0px 3px 0px; }
-  .buttons .tag, .buttons .tech, .buttons .link {
-    float: left;
-    padding: 3px 10px;
-    color: #fff;
-    font-size: 12px;
-    margin-right: 3px; }
-  .buttons .tech {
-    background: #888; }
-  .buttons .link {
-    background: #333; }
-  .buttons .link:hover {
-    color: #333;
-    background: #eee; }
-
-textarea.materialize-textarea {
-  padding: 5px 0px; }
-
-.add-entry {
-  position: fixed;
-  bottom: 30px;
-  right: 30px; }
-
-.modal .modal-footer {
-  height: 60px; }
-  .modal .modal-footer .btn,
-  .modal .modal-footer .btn-flat {
-    margin: 8px 4px; }
-.modal .modal-content h4 {
-  padding-top: 20px; }
-.modal .row {
-  margin: 0px; }
+main {
+  flex: 1 0 auto; }
+  main .card-title i {
+    font-size: 15px;
+    color: #555; }
+  main .project-description {
+    font-size: 15px; }
+  main .project-notes {
+    padding-top: 10px;
+    font-size: 14px; }
+  main .category {
+    padding-top: 20px; }
+  main .buttons {
+    border-top: 1px solid #eee; }
+    main .buttons div {
+      overflow: hidden; }
+    main .buttons .tag, main .buttons .tech, main .buttons .link {
+      float: left;
+      padding: 3px 10px;
+      color: #fff;
+      font-size: 12px;
+      margin: 0 3px 3px 0; }
+    main .buttons .tech {
+      background: #888; }
+    main .buttons .link {
+      background: #333; }
+    main .buttons .link:hover {
+      color: #333;
+      background: #eee; }
+  main textarea.materialize-textarea {
+    padding: 5px 0px; }
+  main .add-entry {
+    position: fixed;
+    bottom: 30px;
+    right: 30px; }
+  main .modal .modal-footer {
+    height: 60px; }
+    main .modal .modal-footer .btn,
+    main .modal .modal-footer .btn-flat {
+      margin: 8px 4px; }
+  main .modal .modal-content h4 {
+    padding-top: 20px; }
+  main .modal .row {
+    margin: 0px; }
 
 /*# sourceMappingURL=style.css.map */
