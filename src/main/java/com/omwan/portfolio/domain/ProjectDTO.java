@@ -21,7 +21,7 @@ public class ProjectDTO {
   private String notes;
   private List<String> technologies;
   private String github;
-  private String link;
+  private List<ProjectLinkDTO> links;
   private boolean isDeleted;
   private boolean isPublic;
   private boolean isLocked;
@@ -92,12 +92,12 @@ public class ProjectDTO {
     this.github = github;
   }
 
-  public String getLink() {
-    return link;
+  public List<ProjectLinkDTO> getLink() {
+    return links;
   }
 
-  public void setLink(String link) {
-    this.link = link;
+  public void setLink(List<ProjectLinkDTO> links) {
+    this.links = links;
   }
 
   public boolean isDeleted() {

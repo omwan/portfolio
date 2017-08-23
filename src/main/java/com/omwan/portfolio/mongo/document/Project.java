@@ -22,7 +22,7 @@ public class Project {
   private String notes;
   private List<String> technologies;
   private String github;
-  private String link;
+  private List<ProjectLink> links;
   private boolean isDeleted;
   private boolean isPublic;
   private Date startDate;
@@ -89,12 +89,12 @@ public class Project {
     this.github = github;
   }
 
-  public String getLink() {
-    return link;
+  public List<ProjectLink> getLinks() {
+    return links;
   }
 
-  public void setLink(String link) {
-    this.link = link;
+  public void setLinks(List<ProjectLink> links) {
+    this.links = links;
   }
 
   public boolean isDeleted() {
