@@ -24,11 +24,12 @@ public class ProjectDTO {
   private String link;
   private boolean isDeleted;
   private boolean isPublic;
+  private boolean isLocked;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM")
   private Date startDate;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM")
   private Date endDate;
 
   public ProjectDTO() {
@@ -129,5 +130,13 @@ public class ProjectDTO {
 
   public void setEndDate(Date endDate) {
     this.endDate = endDate;
+  }
+
+  public boolean isLocked() {
+    return isLocked;
+  }
+
+  public void setLocked(boolean locked) {
+    isLocked = locked;
   }
 }

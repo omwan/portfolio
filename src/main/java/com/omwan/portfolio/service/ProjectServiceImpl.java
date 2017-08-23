@@ -78,6 +78,9 @@ public class ProjectServiceImpl implements ProjectService {
   @Override
   @Transactional
   public ProjectDTO saveProject(ProjectDTO project) {
+    if (project.isLocked()) {
+      throw new IllegalArgumentException("Project cannot be modified");
+    }
     Project document = ProjectUtils.convertFromDomain(project);
     try {
       return ProjectUtils.convertFromDocument(projectRepository.save(document));
@@ -105,12 +108,14 @@ public class ProjectServiceImpl implements ProjectService {
   }
 
   private ProjectDTO updateProjectDeleted(String id, boolean deleted) {
-    Project projectToRestore = projectRepository.findOne(id);
-    if (projectToRestore == null) {
+    Project project = projectRepository.findOne(id);
+    if (project == null) {
       throw new IllegalArgumentException("no project found for the given ID");
+    } else if (project.isLocked()) {
+      throw new IllegalArgumentException("Project cannot be modified");
     }
-    projectToRestore.setDeleted(deleted);
-    return ProjectUtils.convertFromDocument(projectRepository.save(projectToRestore));
+    project.setDeleted(deleted);
+    return ProjectUtils.convertFromDocument(projectRepository.save(project));
   }
 
   /**

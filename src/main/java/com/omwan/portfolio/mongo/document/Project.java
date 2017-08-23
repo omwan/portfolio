@@ -1,7 +1,5 @@
 package com.omwan.portfolio.mongo.document;
 
-import com.omwan.portfolio.domain.ProjectCategory;
-
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -29,6 +27,7 @@ public class Project {
   private boolean isPublic;
   private Date startDate;
   private Date endDate;
+  private boolean isLocked;
 
   public Project() {
 
@@ -128,5 +127,13 @@ public class Project {
 
   public void setEndDate(Date endDate) {
     this.endDate = endDate;
+  }
+
+  public boolean isLocked() {
+    return isLocked;
+  }
+
+  public void setLocked(boolean locked) {
+    this.isLocked = locked;
   }
 }
