@@ -87,8 +87,7 @@
                             <span class="tech" ng-repeat="tech in value.technologies">{{tech}}</span>
                         </div>
                         <div>
-                            <a class="link" ng-if="value.github" href="{{value.github}}">github</a>
-                            <a class="link" ng-if="value.link" href="value.link">link</a>
+                            <a class="link" ng-repeat="link in value.links" href="{{link.href}}" target="_blank">{{link.title}}</a>
                         </div>
                     </div>
                 </div>
@@ -142,27 +141,6 @@
                                         <label>Notes</label>
                                     </div>
                                 </div>
-
-                                <div class="row">
-                                    <div class="col s6" input-field>
-                                        <input type="text" ng-model="project.github">
-                                        <label>GitHub</label>
-                                    </div>
-                                    <div class="col s6" style="padding-top:34px;">
-                                        <input type="checkbox" class="filled-in" id="filled-in-box" ng-model="project.public" />
-                                        <label for="filled-in-box">Public</label>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col s12 m6" input-field>
-                                        <input type="text" ng-model="project.link">
-                                        <label>Link</label>
-                                    </div>
-                                    <div class="col s12 m6" input-field>
-                                        <input type="text" ng-model="project.technologies">
-                                        <label>Technologies</label>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col s12 m6" input-field>
                                         <input type="text" ng-model="project.startDate">
@@ -171,6 +149,37 @@
                                     <div class="col s12 m6" input-field>
                                         <input type="text" ng-model="project.endDate">
                                         <label>End Date</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12 m10" input-field>
+                                        <input type="text" ng-model="project.technologies">
+                                        <label>Technologies</label>
+                                    </div>
+                                    <div class="col s12 m2" style="padding-top:34px">
+                                        <input type="checkbox" class="filled-in" id="filled-in-box" ng-model="project.public" />
+                                        <label for="filled-in-box">Public</label>
+                                    </div>
+                                </div>
+
+                                <div class="row" ng-repeat="link in project.links track by $index">
+                                    <div class="col s12 m6" input-field>
+                                        <input type="text" ng-model="link.title">
+                                        <label>Link Title</label>
+                                    </div>
+                                    <div class="col s11 m5" input-field>
+                                        <input type="text" ng-model="link.href">
+                                        <label>Link URL</label>
+                                    </div>
+                                    <div class="col s1">
+                                        <a ng-click="deleteLink($index)" href="javascript:void(0)" class="delete-link-btn material-icons">close</a>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s6" style="padding-top:34px;">
+                                    <a class="btn" ng-click="addLink()">add another link</a>
                                     </div>
                                 </div>
                             </div>

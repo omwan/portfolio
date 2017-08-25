@@ -4,9 +4,9 @@ app.controller('controller', ['$scope', '$http', function ($scope, $http) {
     var getProjectsUrl = '/api/projects';
     var filterProjectsByPublicUrl = '/api/projects?publicOnly=true';
     var getProjectsByCategoryUrl = '/api/projects/{0}';
-//        var getProjectsUrl = 'js/mocks/all-projects.json ';
-//        var filterProjectsByPublicUrl = 'js/mocks/public-projects.json';
-//        var getProjectsByCategoryUrl = 'js/mocks/class-projects.json';
+//    var getProjectsUrl = 'js/mocks/all-projects.json ';
+//    var filterProjectsByPublicUrl = 'js/mocks/public-projects.json';
+//    var getProjectsByCategoryUrl = 'js/mocks/class-projects.json';
 
     var toastLife = 1500;
     var getProjectsError = 'Projects could not be loaded';

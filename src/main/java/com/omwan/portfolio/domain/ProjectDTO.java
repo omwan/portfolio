@@ -20,7 +20,6 @@ public class ProjectDTO {
   private String description;
   private String notes;
   private List<String> technologies;
-  private String github;
   private List<ProjectLinkDTO> links;
   private boolean isDeleted;
   private boolean isPublic;
@@ -84,19 +83,11 @@ public class ProjectDTO {
     this.technologies = technologies;
   }
 
-  public String getGithub() {
-    return github;
-  }
-
-  public void setGithub(String github) {
-    this.github = github;
-  }
-
-  public List<ProjectLinkDTO> getLink() {
+  public List<ProjectLinkDTO> getLinks() {
     return links;
   }
 
-  public void setLink(List<ProjectLinkDTO> links) {
+  public void setLinks(List<ProjectLinkDTO> links) {
     this.links = links;
   }
 

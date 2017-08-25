@@ -5,15 +5,22 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
     var saveProjectsSuccess = 'Project saved successfully';
     var saveProjectsError = 'Project could not be saved';
     var toastLife = 1500;
-
+    
+    $scope.addLink = function() {
+        $scope.project.links.push({});
+    }
+    
+    $scope.deleteLink = function(index) {
+        $scope.project.links.splice(index, 1);
+    }
+    
     $scope.project = {
         title: '',
         category: '',
         public: true,
-        technologies: ''
+        technologies: '',
+        links: [{}]
     };
-
-    $scope.technologies = '';
 
     $scope.saveProject = function () {
         if ($scope.project.technologies == '') {
@@ -29,6 +36,4 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
             Materialize.toast(saveProjectsError, toastLife);
         });
     };
-
-//    $scope.hasRequiredFields = false;
 }]);

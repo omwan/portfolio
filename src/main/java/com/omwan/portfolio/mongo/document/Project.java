@@ -21,7 +21,6 @@ public class Project {
   private String description;
   private String notes;
   private List<String> technologies;
-  private String github;
   private List<ProjectLink> links;
   private boolean isDeleted;
   private boolean isPublic;
@@ -79,14 +78,6 @@ public class Project {
 
   public void setTechnologies(List<String> technologies) {
     this.technologies = technologies;
-  }
-
-  public String getGithub() {
-    return github;
-  }
-
-  public void setGithub(String github) {
-    this.github = github;
   }
 
   public List<ProjectLink> getLinks() {
