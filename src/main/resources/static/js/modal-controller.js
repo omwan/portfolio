@@ -5,24 +5,34 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
     var saveProjectsSuccess = 'Project saved successfully';
     var saveProjectsError = 'Project could not be saved';
     var toastLife = 1500;
-    
-    $scope.addLink = function() {
-        $scope.project.links.push({});
+
+    $scope.addLink = function () {
+        $scope.project.links.push({
+            'title': '',
+            'href': ''
+        });
     }
-    
-    $scope.deleteLink = function(index) {
+
+    $scope.deleteLink = function (index) {
         $scope.project.links.splice(index, 1);
     }
-    
+
     $scope.project = {
         title: '',
         category: '',
         public: true,
         technologies: '',
-        links: [{}]
+        links: [{
+            'title': '',
+            'href': ''
+        }]
     };
 
     $scope.saveProject = function () {
+        $scope.project.links = $scope.project.links.filter(function (link) {
+            return link.title != '';
+        });
+
         if ($scope.project.technologies == '') {
             $scope.project.technologies = null;
         } else {

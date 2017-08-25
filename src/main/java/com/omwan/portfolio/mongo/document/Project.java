@@ -32,6 +32,12 @@ public class Project {
 
   }
 
+  public Project(String title, String category, String description) {
+    this.title = title;
+    this.category = category;
+    this.description = description;
+  }
+
   public String getId() {
     return id;
   }

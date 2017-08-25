@@ -86,7 +86,7 @@
                         <div>
                             <span class="tech" ng-repeat="tech in value.technologies">{{tech}}</span>
                         </div>
-                        <div>
+                        <div ng-if="value.links.length > 0" >
                             <a class="link" ng-repeat="link in value.links" href="{{link.href}}" target="_blank">{{link.title}}</a>
                         </div>
                     </div>
@@ -162,7 +162,7 @@
                                         <label for="filled-in-box">Public</label>
                                     </div>
                                 </div>
-
+                                
                                 <div class="row" ng-repeat="link in project.links track by $index">
                                     <div class="col s12 m6" input-field>
                                         <input type="text" ng-model="link.title">

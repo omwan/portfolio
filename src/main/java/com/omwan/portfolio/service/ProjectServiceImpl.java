@@ -1,8 +1,8 @@
 package com.omwan.portfolio.service;
 
+import com.omwan.portfolio.component.ProjectComponent;
 import com.omwan.portfolio.domain.ProjectDTO;
 import com.omwan.portfolio.mongo.document.Project;
-import com.omwan.portfolio.mongo.repository.ProjectRepository;
 import com.omwan.portfolio.util.ProjectUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,27 +25,36 @@ import java.util.stream.Collectors;
 public class ProjectServiceImpl implements ProjectService {
 
   @Autowired
-  private ProjectRepository projectRepository;
+  private ProjectComponent projectComponent;
 
+  /**
+   * Retrieve all projects from Mongo, mapped by category.
+   */
   @Override
   @Transactional(readOnly = true)
   public Map<String, List<ProjectDTO>> getProjects(boolean publicOnly) {
-    List<Project> projects = projectRepository.findByIsDeleted(false);
+    List<Project> projects = projectComponent.getAllProjects();
     Map<String, List<ProjectDTO>> mappedProjects = new HashMap<>();
     filterAndConvertDocuments(projects, publicOnly)
             .forEach(project -> addProjectToMap(mappedProjects, project));
     return mappedProjects;
   }
 
+  /**
+   * Retrieve all projects for the given category from Mongo.
+   */
   @Override
   public List<ProjectDTO> getProjectsForCategory(String category, boolean publicOnly) {
-    List<Project> projects = projectRepository.findByCategoryAndIsDeleted(category.toUpperCase(), false);
+    List<Project> projects = projectComponent.getProjectsForCategory(category);
     return filterAndConvertDocuments(projects, publicOnly);
   }
 
+  /**
+   * Retrieve all deleted projects, mapped by category.
+   */
   @Override
   public Map<String, List<ProjectDTO>> getDeletedProjects() {
-    List<Project> projects = projectRepository.findByIsDeleted(true);
+    List<Project> projects = projectComponent.getDeletedProjects();
     Map<String, List<ProjectDTO>> mappedProjects = new HashMap<>();
     projects.stream()
             .map(ProjectUtils::convertFromDocument)
@@ -53,24 +62,19 @@ public class ProjectServiceImpl implements ProjectService {
     return mappedProjects;
   }
 
+  /**
+   * Retrieve all deleted projects for he given category.
+   */
   @Override
   public List<ProjectDTO> getDeletedProjectsForCategory(String category) {
-    List<Project> projects = projectRepository.findByCategoryAndIsDeleted(category.toUpperCase(), true);
+    List<Project> projects = projectComponent.getDeletedProjectsForCategory(category);
     return projects.stream()
-            .map(ProjectUtils::convertFromDocument)
-            .collect(Collectors.toList());
-  }
-
-  private List<ProjectDTO> filterAndConvertDocuments(List<Project> projects, boolean publicOnly) {
-    return projects.stream()
-            .filter(project -> !publicOnly || project.isPublic())
             .map(ProjectUtils::convertFromDocument)
             .collect(Collectors.toList());
   }
 
   /**
-   * Save the given project to Mongo. If a project already exists in the collection for
-   * the given title, an IllegalArgumentException will be thrown.
+   * Save the given project to Mongo.
    *
    * @param project project to save
    * @return saved project
@@ -83,15 +87,14 @@ public class ProjectServiceImpl implements ProjectService {
     }
     Project document = ProjectUtils.convertFromDomain(project);
     try {
-      return ProjectUtils.convertFromDocument(projectRepository.save(document));
+      return ProjectUtils.convertFromDocument(projectComponent.saveProject(document));
     } catch (DuplicateKeyException e) {
       throw new IllegalArgumentException("project found with the given title");
     }
   }
 
   /**
-   * Soft delete the given project from Mongo. If there is no project in the collection
-   * for the given id, an IllegalArgumentException will be thrown.
+   * Soft delete the given project from Mongo.
    *
    * @param id id of project to delete
    * @return deleted project
@@ -99,23 +102,32 @@ public class ProjectServiceImpl implements ProjectService {
   @Override
   @Transactional
   public ProjectDTO deleteProject(String id) {
-    return updateProjectDeleted(id, true);
+    return ProjectUtils.convertFromDocument(projectComponent.updateProjectDeletedFlag(id, true));
   }
 
+  /**
+   * Restore the given project.
+   *
+   * @param id id of project to restore
+   * @return restored project
+   */
   @Override
   public ProjectDTO restoreProject(String id) {
-    return updateProjectDeleted(id, false);
+    return ProjectUtils.convertFromDocument(projectComponent.updateProjectDeletedFlag(id, false));
   }
 
-  private ProjectDTO updateProjectDeleted(String id, boolean deleted) {
-    Project project = projectRepository.findOne(id);
-    if (project == null) {
-      throw new IllegalArgumentException("no project found for the given ID");
-    } else if (project.isLocked()) {
-      throw new IllegalArgumentException("Project cannot be modified");
-    }
-    project.setDeleted(deleted);
-    return ProjectUtils.convertFromDocument(projectRepository.save(project));
+  /**
+   * Filters the list of projects by public flag if needed, and converts them to domain objects.
+   *
+   * @param projects   list of projects to be processed
+   * @param publicOnly whether to filter by public projects
+   * @return list of filtered + converted projects
+   */
+  private List<ProjectDTO> filterAndConvertDocuments(List<Project> projects, boolean publicOnly) {
+    return projects.stream()
+            .filter(project -> !publicOnly || project.isPublic())
+            .map(ProjectUtils::convertFromDocument)
+            .collect(Collectors.toList());
   }
 
   /**

@@ -12,12 +12,32 @@ import java.util.Map;
  */
 public interface ProjectService {
 
+  /**
+   * Retrieve all projects from Mongo, mapped by category.
+   * @param publicOnly
+   * @return
+   */
   Map<String, List<ProjectDTO>> getProjects(boolean publicOnly);
 
+  /**
+   * Retrieve all projects for the given category from Mongo.
+   * @param category
+   * @param publicOnly
+   * @return
+   */
   List<ProjectDTO> getProjectsForCategory(String category, boolean publicOnly);
 
+  /**
+   * Retrieve all deleted projects, mapped by category.
+   * @return
+   */
   Map<String, List<ProjectDTO>> getDeletedProjects();
 
+  /**
+   * Retrieve all deleted projects for he given category.
+   * @param category
+   * @return
+   */
   List<ProjectDTO> getDeletedProjectsForCategory(String category);
 
   /**
