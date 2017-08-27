@@ -1,7 +1,7 @@
 /**
  * Controller for modal to add a new project.
  */
-app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
+app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', function ($scope, $http, $rootScope, rest) {
     $scope.openModal = false;
 
     var saveProjectUrl = '/api/projects';
@@ -9,14 +9,28 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
     var saveProjectsError = 'Project could not be saved';
     var toastLife = 1500;
 
+    var _initProject = function () {
+        $scope.project = {
+            title: '',
+            category: '',
+            public: true,
+            technologies: '',
+            links: [{
+                'title': '',
+                'href': ''
+            }]
+        };
+    };
+
     /**
      * Show another set of inputs to add a project link in the modal.
      */
     $scope.addLink = function () {
-        $scope.project.links.push({
+        var emptyLink = {
             'title': '',
             'href': ''
-        });
+        };
+        $scope.project.links.push(emptyLink);
     };
 
     /**
@@ -27,15 +41,27 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
         $scope.project.links.splice(index, 1);
     };
 
-    $scope.project = {
-        title: '',
-        category: '',
-        public: true,
-        technologies: '',
-        links: [{
-            'title': '',
-            'href': ''
-        }]
+    /**
+     * Parse technologies string into array of strings.
+     */
+    var _formatTechnologies = function () {
+        if ($scope.project.technologies == '' || $scope.project.technologies == null) {
+            $scope.project.technologies = null;
+        } else {
+            $scope.project.technologies = $scope.project.technologies.split(",");
+        }
+    };
+
+    /**
+     * Add new project to scope to update UI without refreshing page.
+     * @param data new project data
+     */
+    var _addProjectToScope = function (data) {
+        if ($rootScope.projects[$scope.project.category]) {
+            $rootScope.projects[$scope.project.category].push(data);
+        } else {
+            $rootScope.projects[$scope.project.category] = [data];
+        }
     };
 
     /**
@@ -46,48 +72,47 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
             return link.title != '';
         });
 
-        //parse technologies string into array of strings
-        if ($scope.project.technologies == '') {
-            $scope.project.technologies = null;
-        } else {
-            $scope.project.technologies = $scope.project.technologies.split(",");
-        }
+        _formatTechnologies();
 
-        $http.post(saveProjectUrl, $scope.project).success(function (data) {
-            //update project list
-            $scope.$parent.projects[$scope.project.category].push(data);
-
-            //show success toast, close modal
-            Materialize.toast(saveProjectsSuccess, toastLife);
+        var successHandler = function (data) {
             $scope.openModal = false;
+            _addProjectToScope(data);
+            _initProject();
+            Materialize.toast(saveProjectsSuccess, toastLife);
+        };
 
-            //reset scope variable
-            $scope.project = {
-                title: '',
-                category: '',
-                public: true,
-                technologies: '',
-                links: [{
-                    'title': '',
-                    'href': ''
-                }]
-            };
-        }).error(function () {
-            Materialize.toast(saveProjectsError, toastLife);
-        });
+        rest.call('POST', saveProjectUrl, {}, $scope.project, successHandler, saveProjectsError);
     };
 
-    //datepicker constants
-    $scope.currentTime = new Date();
-    $scope.month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    $scope.monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    $scope.weekdaysFull = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    $scope.weekdaysLetter = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-    $scope.disable = [false, 1, 7];
-    $scope.today = 'Today';
-    $scope.clear = 'Clear';
-    $scope.close = 'Select';
-    $scope.minDate = "2015-01-01 00:00";
-    $scope.maxDate = new Date().toISOString();
+    /**
+     * Initialize datepicker fields/values.
+     */
+    var _initDatePicker = function () {
+        $scope.currentTime = new Date();
+        $scope.month =
+            ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+             'October', 'November', 'December'];
+        $scope.monthShort =
+            ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        $scope.weekdaysFull =
+            ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        $scope.weekdaysLetter = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+        $scope.disable = [];
+        $scope.firstDay = 0;
+        $scope.today = 'Today';
+        $scope.clear = 'Clear';
+        $scope.close = 'Select';
+        $scope.minDate = "2015-01-01 00:00";
+        $scope.maxDate = new Date().toISOString();
+    };
 
+    /**
+     * Initialize scope values.
+     */
+    var _init = function () {
+        _initProject();
+        _initDatePicker();
+    };
+
+    _init();
 }]);

@@ -8,7 +8,6 @@
 $transition-time: .3s;
 $body-text-size: 15px;
 $sub-text-size: 14px;
-
 body {
     background: #eee;
     display: flex;
@@ -23,6 +22,24 @@ body {
     h2 {
         font-size: 20px;
         text-align: center;
+    }
+}
+
+.spinner {
+    z-index:99999;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    
+    img {
+        height:200px;
+        width:200px;
     }
 }
 
@@ -105,18 +122,18 @@ main {
             margin: 0px;
         }
         .delete-link-btn {
-            color:#555;
+            color: #555;
             i {
-                margin-top:25px;
+                margin-top: 25px;
             }
         }
     }
 }
 
 .page-footer {
-    padding-top:0px;
-    text-align:center;
+    padding-top: 0px;
+    text-align: center;
     a {
-        color:#fff;
+        color: #fff;
     }
 }

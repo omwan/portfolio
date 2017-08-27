@@ -21,6 +21,24 @@ body h2 {
     text-align: center;
 }
 
+.spinner {
+    z-index: 99999;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100%;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner img {
+    height: 200px;
+    width: 200px;
+}
+
 header .nav-wrapper {
     padding-left: 10px;
     padding-right: 10px;
@@ -66,9 +84,7 @@ main .buttons div {
     overflow: hidden;
 }
 
-main .buttons .tag,
-main .buttons .tech,
-main .buttons .link {
+main .buttons .tag, main .buttons .tech, main .buttons .link {
     float: left;
     padding: 3px 10px;
     color: #fff;

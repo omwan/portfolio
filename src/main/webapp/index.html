@@ -30,13 +30,19 @@
 </head>
 
 <body ng-app="app" ng-controller="controller">
+
+<!--loading spinner-->
+<div class="spinner" ng-if="isLoading">
+    <img src="assets/spinner.gif">
+</div>
+
 <header>
 
     <!--navbar-->
     <nav>
         <div class="nav-wrapper teal lighten-4">
 
-            <a class="brand-logo">{{title}}</a>
+            <a class="brand-logo">Olivia Wan, Project Portfolio</a>
             <a href="#" data-activates="mobile-demo" class="button-collapse"><i
                     class="material-icons">menu</i></a>
 
@@ -126,7 +132,8 @@
                         {{value.description}}
                     </div>
                     <div class="project-notes grey-text"
-                         ng-if="value.notes">{{value.notes}}</div>
+                         ng-if="value.notes">{{value.notes}}
+                    </div>
                 </div>
 
                 <!--project footer-->
@@ -214,7 +221,7 @@
                                            weekdays-short="{{ weekdaysShort }}"
                                            weekdays-letter="{{ weekdaysLetter }}" disable="disable"
                                            min="{{ minDate }}" max="{{ maxDate }}" today="today"
-                                           first-day="1" clear="clear" close="close"
+                                           first-day="firstDay" clear="clear" close="close"
                                            select-years="15" on-start="onStart()"
                                            on-render="onRender()" on-open="onOpen()"
                                            on-close="onClose()" on-set="onSet()"
@@ -230,7 +237,7 @@
                                            weekdays-short="{{ weekdaysShort }}"
                                            weekdays-letter="{{ weekdaysLetter }}" disable="disable"
                                            min="{{ minDate }}" max="{{ maxDate }}" today="today"
-                                           first-day="1" clear="clear" close="close"
+                                           first-day="firstDay" clear="clear" close="close"
                                            select-years="15" on-start="onStart()"
                                            on-render="onRender()" on-open="onOpen()"
                                            on-close="onClose()" on-set="onSet()"
@@ -306,8 +313,10 @@
 </footer>
 
 <!--angular controllers-->
+<script src="js/rest-helper.js"></script>
 <script src="js/controller.js"></script>
 <script src="js/modal-controller.js"></script>
+
 </body>
 
 </html>
