@@ -23,7 +23,8 @@ import mockit.MockUp;
 import mockit.Tested;
 import mockit.integration.junit4.JMockit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Class to test methods from service to retrieve project data from mongo.

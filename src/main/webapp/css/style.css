@@ -1,82 +1,136 @@
 body {
-  background: #eee;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column; }
-  body a {
+    background: #eee;
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+body a {
     -webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
-    transition: all 0.3s ease-in-out; }
-  body h1 {
-    text-align: center; }
-  body h2 {
+    transition: all 0.3s ease-in-out;
+}
+
+body h1 {
+    text-align: center;
+}
+
+body h2 {
     font-size: 20px;
-    text-align: center; }
+    text-align: center;
+}
 
 header .nav-wrapper {
-  padding-left: 10px;
-  padding-right: 10px; }
-  header .nav-wrapper #filter-buttons a {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+header .nav-wrapper #filter-buttons a {
     margin: 0 5px;
     padding-left: 10px;
-    padding-right: 10px; }
+    padding-right: 10px;
+}
 
 main {
-  flex: 1 0 auto; }
-  main .card-title i {
-    font-size: 15px; }
-  main .project-description {
+    flex: 1 0 auto;
+}
+
+main .card-title i {
+    font-size: 15px;
+}
+
+main .project-description {
     padding-top: 10px;
-    font-size: 15px; }
-  main .project-notes {
+    font-size: 15px;
+}
+
+main .project-notes {
     padding-top: 10px;
-    font-size: 14px; }
-  main .project-dates {
-    font-size: 14px; }
-  main .category {
-    padding-top: 20px; }
-  main .buttons {
-    border-top: 1px solid #eee; }
-    main .buttons div {
-      overflow: hidden; }
-    main .buttons .tag, main .buttons .tech, main .buttons .link {
-      float: left;
-      padding: 3px 10px;
-      color: #fff;
-      font-size: 12px;
-      margin: 0 3px 3px 0; }
-    main .buttons .tech {
-      background: #888; }
-    main .buttons .link {
-      background: #333; }
-    main .buttons .link:hover {
-      color: #333;
-      background: #eee; }
-  main textarea.materialize-textarea {
-    padding: 5px 0px; }
-  main .add-entry {
+    font-size: 14px;
+}
+
+main .project-dates {
+    font-size: 14px;
+}
+
+main .category {
+    padding-top: 20px;
+}
+
+main .buttons {
+    border-top: 1px solid #eee;
+}
+
+main .buttons div {
+    overflow: hidden;
+}
+
+main .buttons .tag,
+main .buttons .tech,
+main .buttons .link {
+    float: left;
+    padding: 3px 10px;
+    color: #fff;
+    font-size: 12px;
+    margin: 0 3px 3px 0;
+}
+
+main .buttons .tech {
+    background: #888;
+}
+
+main .buttons .link {
+    background: #333;
+}
+
+main .buttons .link:hover {
+    color: #333;
+    background: #eee;
+}
+
+main textarea.materialize-textarea {
+    padding: 5px 0px;
+}
+
+main .add-entry {
     position: fixed;
     bottom: 30px;
-    right: 30px; }
-  main .modal .modal-footer {
-    height: 60px; }
-    main .modal .modal-footer .btn,
-    main .modal .modal-footer .btn-flat {
-      margin: 8px 4px; }
-  main .modal .modal-content h4 {
-    padding-top: 20px; }
-  main .modal .row {
-    margin: 0px; }
-  main .modal .delete-link-btn {
-    color: #555; }
-    main .modal .delete-link-btn i {
-      margin-top: 25px; }
+    right: 30px;
+}
+
+main .modal .modal-footer {
+    height: 60px;
+}
+
+main .modal .modal-footer .btn,
+main .modal .modal-footer .btn-flat {
+    margin: 8px 4px;
+}
+
+main .modal .modal-content h4 {
+    padding-top: 20px;
+}
+
+main .modal .row {
+    margin: 0px;
+}
+
+main .modal .delete-link-btn {
+    color: #555;
+}
+
+main .modal .delete-link-btn i {
+    margin-top: 25px;
+}
 
 .page-footer {
-  padding-top: 0px;
-  text-align: center; }
-  .page-footer a {
-    color: #fff; }
+    padding-top: 0px;
+    text-align: center;
+}
+
+.page-footer a {
+    color: #fff;
+}
 
 /*# sourceMappingURL=style.css.map */
