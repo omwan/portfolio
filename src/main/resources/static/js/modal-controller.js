@@ -40,8 +40,24 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
         }
 
         $http.post(saveProjectUrl, $scope.project).success(function (data) {
+            //update project list
+            $scope.$parent.projects[$scope.project.category].push(data);
+
+            //show success toast, close modal
             Materialize.toast(saveProjectsSuccess, toastLife);
             $scope.openModal = false;
+
+            //reset scope variable
+            $scope.project = {
+                title: '',
+                category: '',
+                public: true,
+                technologies: '',
+                links: [{
+                    'title': '',
+                    'href': ''
+                }]
+            };
         }).error(function () {
             Materialize.toast(saveProjectsError, toastLife);
         });
@@ -59,4 +75,5 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
     $scope.close = 'Select';
     $scope.minDate = "2015-01-01 00:00";
     $scope.maxDate = new Date().toISOString();
+
 }]);
