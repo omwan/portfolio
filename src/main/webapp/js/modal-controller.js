@@ -1,3 +1,6 @@
+/**
+ * Controller for modal to add a new project.
+ */
 app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
     $scope.openModal = false;
 
@@ -6,16 +9,23 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
     var saveProjectsError = 'Project could not be saved';
     var toastLife = 1500;
 
+    /**
+     * Show another set of inputs to add a project link in the modal.
+     */
     $scope.addLink = function () {
         $scope.project.links.push({
             'title': '',
             'href': ''
         });
-    }
+    };
 
+    /**
+     * Remove a set of inputs to add a project link in the modal.
+     * @param index index of input to delete from modal
+     */
     $scope.deleteLink = function (index) {
         $scope.project.links.splice(index, 1);
-    }
+    };
 
     $scope.project = {
         title: '',
@@ -28,11 +38,15 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
         }]
     };
 
+    /**
+     * Save the project with the input values from the modal to Mongo.
+     */
     $scope.saveProject = function () {
         $scope.project.links = $scope.project.links.filter(function (link) {
             return link.title != '';
         });
 
+        //parse technologies string into array of strings
         if ($scope.project.technologies == '') {
             $scope.project.technologies = null;
         } else {
@@ -65,7 +79,7 @@ app.controller('ModalController', ['$scope', '$http', function ($scope, $http) {
 
     //datepicker constants
     $scope.currentTime = new Date();
-    $scope.month = ['Januar', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    $scope.month = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
     $scope.monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     $scope.weekdaysFull = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     $scope.weekdaysLetter = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];

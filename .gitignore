@@ -28,5 +28,5 @@ nbdist/
 Procfile
 
 ### sass ###
-src/main/resources/static/css/.sass-cache
+src/main/webapp/css/.sass-cache
 *.css.map

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <title>Olivia Wan | Project Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/prism/0.0.1/prism.min.js"></script>
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-materialize/0.2.2/angular-materialize.min.js"></script>
+
+    <!-- App -->
+    <script type="text/javascript" src="js/app.js"></script>
+</head>
+
+<body ng-app="app" ng-controller="controller">
+    <header>
+        <nav>
+            <div class="nav-wrapper teal lighten-4">
+
+                <a class="brand-logo">{{title}}</a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <ul class="right hide-on-med-and-down" id="filter-buttons">
+                    <li>
+                        <a class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="20" data-tooltip="show all" ng-click="getAllProjects()">
+                            <i class="material-icons">select_all</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="20" data-tooltip="filter by work" ng-click="filterByCategory('work')">
+                            <i class="material-icons">work</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="20" data-tooltip="filter by class" ng-click="filterByCategory('class')">
+                            <i class="material-icons">school</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="20" data-tooltip="filter by personal" ng-click="filterByCategory('extracurricular')">
+                            <i class="material-icons">person</i>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="20" data-tooltip="filter by public" ng-click="filterByPublic()">
+                            <i class="material-icons">lock_open</i>
+                        </a>
+                    </li>
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="javascript:void(0)" ng-click="getAllProjects()">all projects</a></li>
+                    <li><a href="javascript:void(0)" ng-click="filterByCategory('work')">work</a></li>
+                    <li><a href="javascript:void(0)" ng-click="filterByCategory('class')">class</a></li>
+                    <li><a href="javascript:void(0)" ng-click="filterByCategory('extracurricular')">personal</a></li>
+                    <li><a href="javascript:void(0)" ng-click="filterByPublic()">public</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+
+            <div class="row category" ng-repeat="category in keys">
+                <h2 ng-if="projects[category].length > 0">{{category}}</h2>
+                <h2 ng-if="projects[category].length == 0">no projects yet in {{category}} category! click the + button to add one</h2>
+
+                <div ng-repeat="value in projects[category] track by $index" class="card col m8 offset-m2 s12">
+                    <div class="card-content">
+                        <div class="card-title">
+                            {{value.title}}
+                            <i ng-if="!value.public" class="material-icons">lock</i>
+                            <a class="material-icons right grey-text text-darken-2" ng-click="deleteProject(category, $index)" href="javascript:void(0)">delete</a>
+                        </div>
+                        <div class="project-dates grey-text" ng-if="value.startDate">
+                            {{value.startDate}} -
+                            <span ng-if="value.endDate">{{value.endDate}}</span>
+                            <span ng-if="!value.endDate">present</span>
+                        </div>
+                        <div class="project-description grey-text text-darken-2">{{value.description}}</div>
+                        <div class="project-notes grey-text">{{value.notes}}</div>
+                    </div>
+                    <div class="card-content buttons">
+                        <div>
+                            <span class="tech" ng-repeat="tech in value.technologies">{{tech}}</span>
+                        </div>
+                        <div ng-if="value.links.length > 0">
+                            <a class="link" ng-repeat="link in value.links" href="{{link.href}}" target="_blank">{{link.title}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row" ng-controller="ModalController">
+            <!-- Modal Trigger -->
+            <div class="col s4">
+                <a class="add-entry btn-floating btn-large waves-effect waves-light red tooltipped" data-position="left" data-delay="50" data-tooltip="Add new project" ng-click="openModal=true" data-target="projectModal" modal open="openModal">
+                    <i class="material-icons">add</i>
+                </a>
+            </div>
+            <!-- Modal Structure -->
+            <div id="projectModal" class="modal modal-fixed-footer">
+                <form ng-submit="saveProject()" name="projectForm">
+                    <div class="modal-content">
+                        <div class="row">
+                            <div class="col s12">
+                                <div class="row">
+                                    <h4 class="col s12">Add New Project</h4>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 m6" input-field>
+                                        <input type="text" ng-model="project.title" required>
+                                        <label>Title*</label>
+                                    </div>
+                                    <div class="col s12 m6" style="margin-top:10px;">
+                                        <div style="margin-top:-10px;" input-field>
+                                            <select material-select ng-model="project.category" required>
+                                                <option value="" disabled selected>Category*</option>
+                                                <option value="WORK">work</option>
+                                                <option value="CLASS">class</option>
+                                                <option value="EXTRACURRICULAR">extracurricular</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12" input-field>
+                                        <textarea class="materialize-textarea" ng-model="project.description" required></textarea>
+                                        <label>Description*</label>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12" input-field>
+                                        <textarea class="materialize-textarea" ng-model="project.notes"></textarea>
+                                        <label>Notes</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 m6" input-field>
+                                        <label for="startDate">Start Date</label>
+                                        <input input-date type="text" name="created" id="startDate" ng-model="project.startDate" container="" format="mmmm yyyy" months-full="{{ month }}" months-short="{{ monthShort }}" weekdays-full="{{ weekdaysFull }}" weekdays-short="{{ weekdaysShort }}" weekdays-letter="{{ weekdaysLetter }}" disable="disable" min="{{ minDate }}" max="{{ maxDate }}" today="today" first-day="1" clear="clear" close="close" select-years="15" on-start="onStart()" on-render="onRender()" on-open="onOpen()" on-close="onClose()" on-set="onSet()" on-stop="onStop()" />
+                                    </div>
+                                    <div class="col s12 m6" input-field>
+                                        <label for="endDate">End Date</label>
+                                        <input input-date type="text" name="created" id="endDate" ng-model="project.endDate" container="" format="mmmm yyyy" months-full="{{ month }}" months-short="{{ monthShort }}" weekdays-full="{{ weekdaysFull }}" weekdays-short="{{ weekdaysShort }}" weekdays-letter="{{ weekdaysLetter }}" disable="disable" min="{{ minDate }}" max="{{ maxDate }}" today="today" first-day="1" clear="clear" close="close" select-years="15" on-start="onStart()" on-render="onRender()" on-open="onOpen()" on-close="onClose()" on-set="onSet()" on-stop="onStop()" />
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s12 m10" input-field>
+                                        <input type="text" ng-model="project.technologies">
+                                        <label>Technologies</label>
+                                    </div>
+                                    <div class="col s12 m2" style="padding-top:34px">
+                                        <input type="checkbox" class="filled-in" id="filled-in-box" ng-model="project.public" />
+                                        <label for="filled-in-box">Public</label>
+                                    </div>
+                                </div>
+
+                                <div class="row" ng-repeat="link in project.links track by $index">
+                                    <div class="col s12 m6" input-field>
+                                        <input type="text" ng-model="link.title">
+                                        <label>Link Title</label>
+                                    </div>
+                                    <div class="col s11 m5" input-field>
+                                        <input type="text" ng-model="link.href">
+                                        <label>Link URL</label>
+                                    </div>
+                                    <div class="col s1">
+                                        <a ng-click="deleteLink($index)" href="javascript:void(0)" class="delete-link-btn material-icons">close</a>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col s6" style="padding-top:34px;">
+                                        <a class="btn" ng-click="addLink()">add another link</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-action waves-effect waves-green btn" ng-submit="saveProject()" ng-disabled="projectForm.$invalid">save</button>
+                        <button class="modal-action modal-close waves-effect waves-green btn-flat">cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="page-footer teal lighten-3">
+        <div class="footer-copyright">
+            <div class="container">
+                © 2017 Olivia Wan |
+                <a href="https://github.com/omwan/portfolio">GitHub</a> |
+                <a href="/swagger-ui.html">API Documentation</a> |
+                <a href="https://travis-ci.org/omwan/portfolio/">Travis CI Build</a>
+            </div>
+        </div>
+    </footer>
+
+    <!--angular controllers-->
+    <script src="js/controller.js"></script>
+    <script src="js/modal-controller.js"></script>
+</body>
+
+</html>
