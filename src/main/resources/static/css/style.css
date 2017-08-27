@@ -25,12 +25,14 @@ header .nav-wrapper {
 main {
   flex: 1 0 auto; }
   main .card-title i {
-    font-size: 15px;
-    color: #555; }
+    font-size: 15px; }
   main .project-description {
+    padding-top: 10px;
     font-size: 15px; }
   main .project-notes {
     padding-top: 10px;
+    font-size: 14px; }
+  main .project-dates {
     font-size: 14px; }
   main .category {
     padding-top: 20px; }
@@ -70,5 +72,11 @@ main {
     color: #555; }
     main .modal .delete-link-btn i {
       margin-top: 25px; }
+
+.page-footer {
+  padding-top: 0px;
+  text-align: center; }
+  .page-footer a {
+    color: #fff; }
 
 /*# sourceMappingURL=style.css.map */

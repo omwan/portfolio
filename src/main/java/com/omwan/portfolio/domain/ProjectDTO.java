@@ -25,10 +25,10 @@ public class ProjectDTO {
   private boolean isPublic;
   private boolean isLocked;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMMM yyyy")
   private Date startDate;
 
-  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM")
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MMMM yyyy")
   private Date endDate;
 
   public ProjectDTO() {

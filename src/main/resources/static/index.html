@@ -75,18 +75,23 @@
 
                 <div ng-repeat="value in category.projects" class="card col m8 offset-m2 s12">
                     <div class="card-content">
-                        <span class="card-title">
+                        <div class="card-title">
                             {{value.title}}
                             <i ng-if="!value.public" class="material-icons">lock</i>
-                        </span>
-                        <div class="project-description  grey-text text-darken-2">{{value.description}}</div>
+                        </div>
+                        <div class="project-dates grey-text" ng-if="value.startDate">
+                            {{value.startDate}} -
+                            <span ng-if="value.endDate">{{value.endDate}}</span>
+                            <span ng-if="!value.endDate">present</span>
+                        </div>
+                        <div class="project-description grey-text text-darken-2">{{value.description}}</div>
                         <div class="project-notes grey-text">{{value.notes}}</div>
                     </div>
                     <div class="card-content buttons">
                         <div>
                             <span class="tech" ng-repeat="tech in value.technologies">{{tech}}</span>
                         </div>
-                        <div ng-if="value.links.length > 0" >
+                        <div ng-if="value.links.length > 0">
                             <a class="link" ng-repeat="link in value.links" href="{{link.href}}" target="_blank">{{link.title}}</a>
                         </div>
                     </div>
@@ -143,12 +148,12 @@
                                 </div>
                                 <div class="row">
                                     <div class="col s12 m6" input-field>
-                                        <input type="text" ng-model="project.startDate">
-                                        <label>Start Date</label>
+                                        <label for="startDate">Start Date</label>
+                                        <input input-date type="text" name="created" id="startDate" ng-model="project.startDate" container="" format="mmmm yyyy" months-full="{{ month }}" months-short="{{ monthShort }}" weekdays-full="{{ weekdaysFull }}" weekdays-short="{{ weekdaysShort }}" weekdays-letter="{{ weekdaysLetter }}" disable="disable" min="{{ minDate }}" max="{{ maxDate }}" today="today" first-day="1" clear="clear" close="close" select-years="15" on-start="onStart()" on-render="onRender()" on-open="onOpen()" on-close="onClose()" on-set="onSet()" on-stop="onStop()" />
                                     </div>
                                     <div class="col s12 m6" input-field>
-                                        <input type="text" ng-model="project.endDate">
-                                        <label>End Date</label>
+                                        <label for="endDate">End Date</label>
+                                        <input input-date type="text" name="created" id="endDate" ng-model="project.endDate" container="" format="mmmm yyyy" months-full="{{ month }}" months-short="{{ monthShort }}" weekdays-full="{{ weekdaysFull }}" weekdays-short="{{ weekdaysShort }}" weekdays-letter="{{ weekdaysLetter }}" disable="disable" min="{{ minDate }}" max="{{ maxDate }}" today="today" first-day="1" clear="clear" close="close" select-years="15" on-start="onStart()" on-render="onRender()" on-open="onOpen()" on-close="onClose()" on-set="onSet()" on-stop="onStop()" />
                                     </div>
                                 </div>
 
@@ -162,7 +167,7 @@
                                         <label for="filled-in-box">Public</label>
                                     </div>
                                 </div>
-                                
+
                                 <div class="row" ng-repeat="link in project.links track by $index">
                                     <div class="col s12 m6" input-field>
                                         <input type="text" ng-model="link.title">
@@ -179,7 +184,7 @@
 
                                 <div class="row">
                                     <div class="col s6" style="padding-top:34px;">
-                                    <a class="btn" ng-click="addLink()">add another link</a>
+                                        <a class="btn" ng-click="addLink()">add another link</a>
                                     </div>
                                 </div>
                             </div>
@@ -194,26 +199,16 @@
         </div>
     </main>
 
-
-    <!--
-    <footer class="page-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col l6 s12">
-                    <h5 class="white-text">Footer Content</h5>
-                    <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
-                </div>
-            </div>
-        </div>
+    <footer class="page-footer teal lighten-3">
         <div class="footer-copyright">
             <div class="container">
-                © 2017 Olivia Wan
-                <a class="grey-text text-lighten-4 right" href="http://github.com/omwan/portfolio">GitHub</a>
+                © 2017 Olivia Wan |
+                <a href="https://github.com/omwan/portfolio">GitHub</a> |
+                <a href="/swagger-ui.html">API Documentation</a> |
+                <a href="https://travis-ci.org/omwan/portfolio/">Travis CI Build</a>
             </div>
         </div>
     </footer>
--->
-
 
     <!--angular controllers-->
     <script src="js/controller.js"></script>

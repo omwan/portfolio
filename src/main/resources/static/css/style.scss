@@ -6,6 +6,9 @@
 }
 
 $transition-time: .3s;
+$body-text-size: 15px;
+$sub-text-size: 14px;
+
 body {
     background: #eee;
     display: flex;
@@ -38,15 +41,18 @@ header {
 main {
     flex: 1 0 auto;
     .card-title i {
-        font-size: 15px;
-        color: #555;
+        font-size: $body-text-size;
     }
     .project-description {
-        font-size: 15px;
+        padding-top: 10px;
+        font-size: $body-text-size;
     }
     .project-notes {
         padding-top: 10px;
-        font-size: 14px;
+        font-size: $sub-text-size;
+    }
+    .project-dates {
+        font-size: $sub-text-size;
     }
     .category {
         padding-top: 20px;
@@ -104,5 +110,13 @@ main {
                 margin-top:25px;
             }
         }
+    }
+}
+
+.page-footer {
+    padding-top:0px;
+    text-align:center;
+    a {
+        color:#fff;
     }
 }
