@@ -9,7 +9,6 @@ import com.omwan.portfolio.util.ProjectUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.dao.DuplicateKeyException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +44,10 @@ public class ProjectServiceImplTest {
     projectService = new ProjectServiceImpl();
   }
 
+  /**
+   * Asserts that service to get all projects returns a mapping of all projects
+   * from component.
+   */
   @Test
   public void testGetProjects() throws Exception {
     final String category1 = "category1";
@@ -79,6 +82,10 @@ public class ProjectServiceImplTest {
     }
   }
 
+  /**
+   * Asserts that service to get projects for a category returns a list of projects
+   * from component.
+   */
   @Test
   public void testGetProjectsForCategory() throws Exception {
     final String category = "category";
@@ -119,21 +126,8 @@ public class ProjectServiceImplTest {
   }
 
   /**
-   * Asserts that if a duplicate key exception is thrown by the repository due to having
-   * a non-unique title, the service throws an IllegalArgumentException.
-   */
-  @Test(expected = IllegalArgumentException.class)
-  public void testSaveProjectDuplicateKey() throws Exception {
-    new Expectations() {{
-      projectComponent.saveProject((Project) any);
-      result = new DuplicateKeyException("duplicate key");
-    }};
-
-    projectService.saveProject(new ProjectDTO());
-  }
-
-  /**
-   * Asserts that the service to save a
+   * Asserts that the service to save a project calls the appropriate component method
+   * and returns the saved project.
    */
   @Test
   public void testSaveProject() throws Exception {

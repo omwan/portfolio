@@ -14,29 +14,33 @@ public interface ProjectService {
 
   /**
    * Retrieve all projects from Mongo, mapped by category.
-   * @param publicOnly
-   * @return
+   *
+   * @param publicOnly filter to only public projects
+   * @return mapping of projects to category
    */
   Map<String, List<ProjectDTO>> getProjects(boolean publicOnly);
 
   /**
    * Retrieve all projects for the given category from Mongo.
-   * @param category
-   * @param publicOnly
-   * @return
+   *
+   * @param category   category to get projects for
+   * @param publicOnly filter to only public projects
+   * @return list of projects for category
    */
   List<ProjectDTO> getProjectsForCategory(String category, boolean publicOnly);
 
   /**
    * Retrieve all deleted projects, mapped by category.
-   * @return
+   *
+   * @return mapping of deleted projects to category
    */
   Map<String, List<ProjectDTO>> getDeletedProjects();
 
   /**
-   * Retrieve all deleted projects for he given category.
-   * @param category
-   * @return
+   * Retrieve all deleted projects for the given category.
+   *
+   * @param category category to get projects for
+   * @return list of deleted projects for category
    */
   List<ProjectDTO> getDeletedProjectsForCategory(String category);
 

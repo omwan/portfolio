@@ -6,7 +6,6 @@ import com.omwan.portfolio.mongo.document.Project;
 import com.omwan.portfolio.util.ProjectUtils;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -82,15 +81,8 @@ public class ProjectServiceImpl implements ProjectService {
   @Override
   @Transactional
   public ProjectDTO saveProject(ProjectDTO project) {
-    if (project.isLocked()) {
-      throw new IllegalArgumentException("Project cannot be modified");
-    }
-    Project document = ProjectUtils.convertFromDomain(project);
-    try {
-      return ProjectUtils.convertFromDocument(projectComponent.saveProject(document));
-    } catch (DuplicateKeyException e) {
-      throw new IllegalArgumentException("project found with the given title");
-    }
+    Project projectToSave = ProjectUtils.convertFromDomain(project);
+    return ProjectUtils.convertFromDocument(projectComponent.saveProject(projectToSave));
   }
 
   /**

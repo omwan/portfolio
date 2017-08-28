@@ -4,6 +4,7 @@ import com.omwan.portfolio.mongo.document.Project;
 import com.omwan.portfolio.mongo.repository.ProjectRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -63,18 +64,26 @@ public class ProjectComponent {
   }
 
   /**
-   * Save the given project to Mongo.
+   * Save the given project to Mongo, blocks save if project is locked or a project
+   * already exists with the given title.
    *
    * @param project project to save
    * @return saved project
    */
   @Transactional
   public Project saveProject(Project project) {
-    return projectRepository.save(project);
+    if (project.isLocked()) {
+      throw new IllegalArgumentException("Project cannot be modified");
+    }
+    try {
+      return projectRepository.save(project);
+    } catch (DuplicateKeyException e) {
+      throw new IllegalArgumentException("project found with the given title");
+    }
   }
 
   /**
-   * Update the deleted flag for the given document.
+   * Update the deleted flag for the given document, blocks update if project is locked.
    *
    * @param id      id of document to soft-delete
    * @param deleted value to set deleted flag to

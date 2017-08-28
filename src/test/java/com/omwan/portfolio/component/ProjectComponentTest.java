@@ -7,6 +7,7 @@ import com.omwan.portfolio.mongo.repository.ProjectRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.dao.DuplicateKeyException;
 
 import mockit.Expectations;
 import mockit.Injectable;
@@ -16,6 +17,8 @@ import mockit.integration.junit4.JMockit;
 import static org.junit.Assert.assertTrue;
 
 /**
+ * Class to test methods for component to call repository methods.
+ *
  * Created by olivi on 08/25/2017.
  */
 @RunWith(JMockit.class)
@@ -30,6 +33,53 @@ public class ProjectComponentTest {
   @Before
   public void setup() {
     projectComponent = new ProjectComponent();
+  }
+
+  /**
+   * Asserts that if a project has the locked flag enabled, the project cannot be saved.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testSaveLockedProject() throws Exception {
+    final Project lockedProject = new Project();
+    lockedProject.setLocked(true);
+    projectComponent.saveProject(lockedProject);
+  }
+
+  /**
+   * Asserts that if a duplicate key exception is thrown by the repository due to having
+   * a non-unique title, the service throws an IllegalArgumentException.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testSaveProjectDuplicateKey() throws Exception {
+    new Expectations() {{
+      projectRepository.save((Project) any);
+      result = new DuplicateKeyException("duplicate key");
+    }};
+
+    projectComponent.saveProject(new Project());
+  }
+
+  @Test
+  public void testSaveProject() throws Exception {
+
+  }
+
+  /**
+   * Asserts that if a project has the locked flag enabled, the project cannot be deleted.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testDeleteLockedProject() throws Exception {
+    final Project lockedProject = new Project();
+    lockedProject.setLocked(true);
+
+    final String id = "1";
+
+    new Expectations() {{
+      projectRepository.findOne(id);
+      returns(lockedProject);
+    }};
+
+    projectComponent.updateProjectDeletedFlag(id, true);
   }
 
   /**
