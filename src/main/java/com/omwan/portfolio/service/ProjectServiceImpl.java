@@ -109,7 +109,8 @@ public class ProjectServiceImpl implements ProjectService {
   }
 
   /**
-   * Filters the list of projects by public flag if needed, and converts them to domain objects.
+   * Filters the list of projects by public flag if needed, converts them to domain objects,
+   * and sorts the project by endDate.
    *
    * @param projects   list of projects to be processed
    * @param publicOnly whether to filter by public projects
@@ -119,6 +120,7 @@ public class ProjectServiceImpl implements ProjectService {
     return projects.stream()
             .filter(project -> !publicOnly || project.isPublic())
             .map(ProjectUtils::convertFromDocument)
+            .sorted(ProjectUtils::compareDates)
             .collect(Collectors.toList());
   }
 

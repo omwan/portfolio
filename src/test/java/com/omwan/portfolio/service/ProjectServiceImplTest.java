@@ -11,6 +11,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -80,6 +82,40 @@ public class ProjectServiceImplTest {
       assertEquals(project.getCategory(), category2);
       assertEquals(project.getDescription(), projects.get(i + projectsForCategory1.size()).getDescription());
     }
+  }
+
+  /**
+   * Asserts that projects are sorted by descending endDate, and if a project has a null endDate
+   * it comes before any projects that have an endDate, since null endDate is interpreted as
+   * an ongoing project.
+   */
+  @Test
+  public void testGetProjectsSorted() throws Exception {
+    final String category = "category";
+    final Project newProject = new Project("new project", category, "desc");
+    final Project oldProject = new Project("old project", category, "desc");
+    final Project presentProject = new Project("present project", category, "desc");
+
+    oldProject.setEndDate(new Date(0));
+    newProject.setEndDate(new Date(100));
+
+    final List<Project> projects = Arrays.asList(oldProject, newProject, presentProject);
+
+    new Expectations() {{
+      projectComponent.getAllProjects();
+      returns(projects);
+    }};
+
+    Map<String, List<ProjectDTO>> actual = projectService.getProjects(false);
+    assertTrue(actual.keySet().contains(category));
+    List<ProjectDTO> projectsForCategory = actual.get(category);
+    assertEquals(projects.size(), projectsForCategory.size());
+
+    assertEquals(presentProject.getTitle(), projectsForCategory.get(0).getTitle());
+
+    assertTrue(newProject.getEndDate().after(oldProject.getEndDate()));
+    assertEquals(newProject.getTitle(), projectsForCategory.get(1).getTitle());
+    assertEquals(oldProject.getTitle(), projectsForCategory.get(2).getTitle());
   }
 
   /**
