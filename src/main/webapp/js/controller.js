@@ -12,6 +12,8 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
     var deleteProjectSucess = 'Project successfully deleted';
     var deleteProjectError = 'Project could not be deleted';
 
+    var toastLife = 1500;
+
     /**
      * Set projects scope to response from API to get all projects.
      */

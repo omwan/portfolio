@@ -7,6 +7,7 @@ app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', func
     var saveProjectUrl = '/api/projects';
     var saveProjectsSuccess = 'Project saved successfully';
     var saveProjectsError = 'Project could not be saved';
+
     var toastLife = 1500;
 
     var _initProject = function () {
