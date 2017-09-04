@@ -3,7 +3,6 @@
  */
 app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function ($scope, $http, rest, $rootScope) {
     var getProjectsUrl = '/api/projects';
-    var filterProjectsByPublicUrl = '/api/projects?publicOnly=true';
     var getProjectsByCategoryUrl = '/api/projects/{0}';
     var deleteProjectUrl = '/api/projects';
 
@@ -33,7 +32,7 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
             $scope.keys = Object.keys(data);
             $rootScope.projects = data;
         };
-        rest.call('GET', filterProjectsByPublicUrl, {}, null, successHandler, filterByPublicError);
+        rest.call('GET', getProjectsUrl, {'publicOnly':true}, null, successHandler, filterByPublicError);
     };
 
     /**
