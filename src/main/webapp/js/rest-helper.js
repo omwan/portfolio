@@ -1,8 +1,8 @@
 /**
  * Service to modularize making ajax rest calls.
  */
-app.service('rest', function ($http, $rootScope) {
-
+app.service('rest', ['$http', '$rootScope', 'toastLife',
+                     function ($http, $rootScope, toastLife) {
     /**
      * Make a rest call for the following parameters; handles showing loading spinner
      * while request is being made, and showing toast upon rest failure.
@@ -24,7 +24,7 @@ app.service('rest', function ($http, $rootScope) {
               })
             .success(successHandler)
             .error(function () {
-                Materialize.toast(errorMessage, 1500);
+                Materialize.toast(errorMessage, toastLife);
             })
             .finally(function () {
                 $rootScope.isLoading = false;
@@ -64,4 +64,4 @@ app.service('rest', function ($http, $rootScope) {
     this.deleteData = function (url, params, successHandler, errorMessage) {
         _executeHttpRequest('DELETE', url, params, null, successHandler, errorMessage);
     };
-});
+}]);

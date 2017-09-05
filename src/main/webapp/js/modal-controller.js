@@ -1,14 +1,13 @@
 /**
  * Controller for modal to add a new project.
  */
-app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', function ($scope, $http, $rootScope, rest) {
+app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', 'toastLife',
+                                   function ($scope, $http, $rootScope, rest, toastLife) {
     $scope.openModal = false;
 
     var saveProjectUrl = '/api/projects';
     var saveProjectsSuccess = 'Project saved successfully';
     var saveProjectsError = 'Project could not be saved';
-
-    var toastLife = 1500;
 
     var _initProject = function () {
         $rootScope.modalProject = {

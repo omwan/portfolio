@@ -1,7 +1,8 @@
 /**
  * Controller for main body of web app.
  */
-app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function ($scope, $http, rest, $rootScope) {
+app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', 'toastLife',
+                              function ($scope, $http, rest, $rootScope, toastLife) {
     var getProjectsUrl = '/api/projects';
     var getProjectsByCategoryUrl = '/api/projects/{0}';
     var deleteProjectUrl = '/api/projects';
@@ -10,8 +11,6 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
     var filterByPublicError = 'Projects could not be filtered';
     var deleteProjectSuccess = 'Project successfully deleted';
     var deleteProjectError = 'Project could not be deleted';
-
-    var toastLife = 1500;
 
     /**
      * Set projects scope to response from API to get all projects.
