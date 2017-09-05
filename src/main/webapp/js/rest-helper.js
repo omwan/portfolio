@@ -14,19 +14,54 @@ app.service('rest', function ($http, $rootScope) {
      * @param successHandler function to be executed upon success
      * @param errorMessage   error message to be shown in toast upon failure
      */
-    this.call = function (method, url, params, data, successHandler, errorMessage) {
+    var _executeHttpRequest = function (method, url, params, data, successHandler, errorMessage) {
         $rootScope.isLoading = true;
         $http({
-                  "method": method,
-                  "url": url,
-                  "params": params,
-                  "data": data
-              }).success(successHandler)
+                  'method': method,
+                  'url': url,
+                  'params': params,
+                  'data': data
+              })
+            .success(successHandler)
             .error(function () {
                 Materialize.toast(errorMessage, 1500);
             })
             .finally(function () {
                 $rootScope.isLoading = false;
             });
+    };
+
+    /**
+     * Make a GET request for the given parameters.
+     * @param url            url to call
+     * @param params         parameters to append to request url
+     * @param successHandler function to be executed upon success
+     * @param errorMessage   error message to be shown in toast upon failure
+     */
+    this.getData = function (url, params, successHandler, errorMessage) {
+        _executeHttpRequest('GET', url, params, null, successHandler, errorMessage);
+    };
+
+    /**
+     * Make a POST request for the given parameters.
+     * @param url            url to call
+     * @param params         parameters to append to request url
+     * @param data           request body
+     * @param successHandler function to be executed upon success
+     * @param errorMessage   error message to be shown in toast upon failure
+     */
+    this.postData = function (url, params, data, successHandler, errorMessage) {
+        _executeHttpRequest('POST', url, params, data, successHandler, errorMessage);
+    };
+
+    /**
+     * Make a DELETE request for the given parameters.
+     * @param url            url to call
+     * @param params         parameters to append to request url
+     * @param successHandler function to be executed upon success
+     * @param errorMessage   error message to be shown in toast upon failure
+     */
+    this.deleteData = function (url, params, successHandler, errorMessage) {
+        _executeHttpRequest('DELETE', url, params, null, successHandler, errorMessage);
     };
 });

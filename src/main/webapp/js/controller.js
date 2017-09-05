@@ -21,7 +21,7 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
             $scope.keys = Object.keys(data);
             $rootScope.projects = data;
         };
-        rest.call('GET', getProjectsUrl, {}, null, successHandler, getProjectsError);
+        rest.getData(getProjectsUrl, {}, successHandler, getProjectsError);
     };
 
     /**
@@ -32,7 +32,7 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
             $scope.keys = Object.keys(data);
             $rootScope.projects = data;
         };
-        rest.call('GET', getProjectsUrl, {'publicOnly':true}, null, successHandler, filterByPublicError);
+        rest.getData(getProjectsUrl, {'publicOnly':true}, successHandler, filterByPublicError);
     };
 
     /**
@@ -46,7 +46,7 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
             $rootScope.projects[category.toUpperCase()] = data;
         };
         var apiUrl = getProjectsByCategoryUrl.replace('{0}', category);
-        rest.call('GET', apiUrl, {}, null, successHandler, getProjectsError);
+        rest.getData(apiUrl, {}, successHandler, getProjectsError);
     };
 
     /**
@@ -61,7 +61,7 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
             $rootScope.projects[category].splice(index, 1);
             Materialize.toast(deleteProjectSuccess, toastLife);
         };
-        rest.call('DELETE', apiUrl, {"id": id}, null, successHandler, deleteProjectError);
+        rest.deleteData(apiUrl, {'id': id}, successHandler, deleteProjectError);
     };
 
     var _formatTechnologies = function (project) {
@@ -100,7 +100,7 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
      */
     var _initSidenavCollapse = function () {
         angular.element(document).ready(function () {
-            $(".button-collapse").sideNav({closeOnClick: true});
+            $('.button-collapse').sideNav({closeOnClick: true});
         });
     };
 

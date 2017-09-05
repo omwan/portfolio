@@ -53,10 +53,10 @@ app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', func
      * Parse technologies string into array of strings.
      */
     var _formatTechnologies = function () {
-        if ($rootScope.modalProject.technologies == '' || $rootScope.modalProject.technologies == null) {
+        if ($rootScope.modalProject.technologies === '' || $rootScope.modalProject.technologies === null) {
             $rootScope.modalProject.technologies = null;
         } else {
-            $rootScope.modalProject.technologies = $rootScope.modalProject.technologies.split(",");
+            $rootScope.modalProject.technologies = $rootScope.modalProject.technologies.split(',');
         }
     };
 
@@ -66,7 +66,7 @@ app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', func
      */
     $scope.saveProject = function () {
         $rootScope.modalProject.links = $rootScope.modalProject.links.filter(function (link) {
-            return link.title != '';
+            return link.title !== '';
         });
 
         _formatTechnologies();
@@ -79,7 +79,7 @@ app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', func
             Materialize.toast(saveProjectsSuccess, toastLife);
         };
 
-        rest.call('POST', saveProjectUrl, {}, $rootScope.modalProject, successHandler, saveProjectsError);
+        rest.postData(saveProjectUrl, {}, $rootScope.modalProject, successHandler, saveProjectsError);
     };
 
     /**
@@ -100,7 +100,7 @@ app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', func
         $scope.today = 'Today';
         $scope.clear = 'Clear';
         $scope.close = 'Select';
-        $scope.minDate = "2015-01-01 00:00";
+        $scope.minDate = '2015-01-01 00:00';
         $scope.maxDate = new Date().toISOString();
     };
 
