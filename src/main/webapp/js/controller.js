@@ -8,7 +8,7 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
 
     var getProjectsError = 'Projects could not be loaded';
     var filterByPublicError = 'Projects could not be filtered';
-    var deleteProjectSucess = 'Project successfully deleted';
+    var deleteProjectSuccess = 'Project successfully deleted';
     var deleteProjectError = 'Project could not be deleted';
 
     var toastLife = 1500;
@@ -16,7 +16,7 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
     /**
      * Set projects scope to response from API to get all projects.
      */
-    $scope.getAllProjects = function () {
+    $rootScope.getAllProjects = function () {
         var successHandler = function (data) {
             $scope.keys = Object.keys(data);
             $rootScope.projects = data;
@@ -59,13 +59,44 @@ app.controller('controller', ['$scope', '$http', 'rest', '$rootScope', function 
         var apiUrl = deleteProjectUrl.replace('{0}', id);
         var successHandler = function () {
             $rootScope.projects[category].splice(index, 1);
-            Materialize.toast(deleteProjectSucess, toastLife);
+            Materialize.toast(deleteProjectSuccess, toastLife);
         };
         rest.call('DELETE', apiUrl, {"id": id}, null, successHandler, deleteProjectError);
     };
 
+    var _formatTechnologies = function (project) {
+        if (project.technologies != null) {
+            project.technologies = project.technologies.join(',');
+        }
+    };
+
     /**
-     * Initialize collapsing sideabar from Materialize.
+     * Open modal to edit project data for an existing project, and load modal fields
+     * with data from project.
+     * @param category category of project to edit (For mapping)
+     * @param index    index of project within mapping
+     */
+    $scope.editProject = function (category, index) {
+        var project = $rootScope.projects[category][index];
+        var modalProject = {
+            id: project.id,
+            title: project.title,
+            category: project.category,
+            description: project.description,
+            notes: project.notes,
+            technologies: project.technologies,
+            links: project.links,
+            deleted: project.deleted,
+            public: project.public,
+            locked: project.locked
+        };
+        _formatTechnologies(modalProject);
+        $rootScope.modalProject = modalProject;
+        $rootScope.openProjectModal();
+    };
+
+    /**
+     * Initialize collapsing sidebar from Materialize.
      */
     var _initSidenavCollapse = function () {
         angular.element(document).ready(function () {

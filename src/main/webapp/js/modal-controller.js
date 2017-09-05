@@ -11,7 +11,7 @@ app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', func
     var toastLife = 1500;
 
     var _initProject = function () {
-        $scope.project = {
+        $rootScope.modalProject = {
             title: '',
             category: '',
             public: true,
@@ -24,6 +24,13 @@ app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', func
     };
 
     /**
+     * Allow access to functionality to open modal from outside scope of this controller.
+     */
+    $rootScope.openProjectModal = function () {
+        $scope.openModal = true;
+    };
+
+    /**
      * Show another set of inputs to add a project link in the modal.
      */
     $scope.addLink = function () {
@@ -31,7 +38,7 @@ app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', func
             'title': '',
             'href': ''
         };
-        $scope.project.links.push(emptyLink);
+        $rootScope.modalProject.links.push(emptyLink);
     };
 
     /**
@@ -39,50 +46,40 @@ app.controller('ModalController', ['$scope', '$http', '$rootScope', 'rest', func
      * @param index index of input to delete from modal
      */
     $scope.deleteLink = function (index) {
-        $scope.project.links.splice(index, 1);
+        $rootScope.modalProject.links.splice(index, 1);
     };
 
     /**
      * Parse technologies string into array of strings.
      */
     var _formatTechnologies = function () {
-        if ($scope.project.technologies == '' || $scope.project.technologies == null) {
-            $scope.project.technologies = null;
+        if ($rootScope.modalProject.technologies == '' || $rootScope.modalProject.technologies == null) {
+            $rootScope.modalProject.technologies = null;
         } else {
-            $scope.project.technologies = $scope.project.technologies.split(",");
+            $rootScope.modalProject.technologies = $rootScope.modalProject.technologies.split(",");
         }
     };
 
     /**
-     * Add new project to scope to update UI without refreshing page.
-     * @param data new project data
-     */
-    var _addProjectToScope = function (data) {
-        if ($rootScope.projects[$scope.project.category]) {
-            $rootScope.projects[$scope.project.category].push(data);
-        } else {
-            $rootScope.projects[$scope.project.category] = [data];
-        }
-    };
-
-    /**
-     * Save the project with the input values from the modal to Mongo.
+     * Save the project with the input values from the modal to Mongo, and refresh view with new
+     * or updated project.
      */
     $scope.saveProject = function () {
-        $scope.project.links = $scope.project.links.filter(function (link) {
+        $rootScope.modalProject.links = $rootScope.modalProject.links.filter(function (link) {
             return link.title != '';
         });
 
         _formatTechnologies();
 
-        var successHandler = function (data) {
-            $scope.openModal = false;
-            _addProjectToScope(data);
+        var successHandler = function () {
+            $rootScope.getAllProjects();
+            //clear model for project modal
             _initProject();
+            $scope.openModal = false;
             Materialize.toast(saveProjectsSuccess, toastLife);
         };
 
-        rest.call('POST', saveProjectUrl, {}, $scope.project, successHandler, saveProjectsError);
+        rest.call('POST', saveProjectUrl, {}, $rootScope.modalProject, successHandler, saveProjectsError);
     };
 
     /**

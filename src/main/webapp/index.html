@@ -119,7 +119,13 @@
                         <a tooltipped data-position="right" data-delay="50"
                            data-tooltip="Delete this project"
                            class="material-icons right grey-text text-darken-2"
-                           ng-click="deleteProject(category, $index)" href="javascript:void(0)">delete</a>
+                           ng-click="deleteProject(category, $index)"
+                           href="javascript:void(0)">delete</a>
+                        <a tooltipped data-position="right" data-delay="50"
+                           data-tooltip="Edit this project"
+                           class="material-icons right grey-text text-darken-2"
+                           ng-click="editProject(category, $index)"
+                           href="javascript:void(0)">edit</a>
                     </div>
                     <div class="project-dates grey-text" ng-if="value.startDate">
                         {{value.startDate}} -
@@ -139,7 +145,7 @@
                 <!--project footer-->
                 <div class="card-content buttons">
                     <div>
-                        <span class="tech" ng-repeat="tech in value.technologies">{{tech}}</span>
+                        <span class="tech" ng-repeat="tech in value.technologies track by $index">{{tech}}</span>
                     </div>
                     <div ng-if="value.links.length > 0">
                         <a class="link" ng-repeat="link in value.links" href="{{link.href}}"
@@ -165,7 +171,7 @@
 
         <!-- Modal Structure -->
         <div id="projectModal" class="modal modal-fixed-footer">
-            <form ng-submit="saveProject()" name="projectForm">
+            <form name="projectForm">
                 <div class="modal-content">
                     <div class="row">
                         <div class="col s12">
@@ -176,12 +182,12 @@
                             <!--title and category-->
                             <div class="row">
                                 <div class="col s12 m6" input-field>
-                                    <input type="text" ng-model="project.title" required>
+                                    <input type="text" ng-model="modalProject.title" required>
                                     <label>Title*</label>
                                 </div>
                                 <div class="col s12 m6" style="margin-top:10px;">
                                     <div style="margin-top:-10px;" input-field>
-                                        <select material-select ng-model="project.category"
+                                        <select material-select ng-model="modalProject.category"
                                                 required>
                                             <option value="" disabled selected>Category*</option>
                                             <option value="WORK">work</option>
@@ -196,7 +202,8 @@
                             <div class="row">
                                 <div class="col s12" input-field>
                                     <textarea class="materialize-textarea"
-                                              ng-model="project.description" required></textarea>
+                                              ng-model="modalProject.description"
+                                              required></textarea>
                                     <label>Description*</label>
                                 </div>
                             </div>
@@ -204,7 +211,7 @@
                             <div class="row">
                                 <div class="col s12" input-field>
                                     <textarea class="materialize-textarea"
-                                              ng-model="project.notes"></textarea>
+                                              ng-model="modalProject.notes"></textarea>
                                     <label>Notes</label>
                                 </div>
                             </div>
@@ -214,7 +221,7 @@
                                 <div class="col s12 m6" input-field>
                                     <label for="startDate">Start Date</label>
                                     <input input-date type="text" name="created" id="startDate"
-                                           ng-model="project.startDate" container=""
+                                           ng-model="modalProject.startDate" container=""
                                            format="mmmm yyyy" months-full="{{ month }}"
                                            months-short="{{ monthShort }}"
                                            weekdays-full="{{ weekdaysFull }}"
@@ -230,7 +237,7 @@
                                 <div class="col s12 m6" input-field>
                                     <label for="endDate">End Date</label>
                                     <input input-date type="text" name="created" id="endDate"
-                                           ng-model="project.endDate" container=""
+                                           ng-model="modalProject.endDate" container=""
                                            format="mmmm yyyy" months-full="{{ month }}"
                                            months-short="{{ monthShort }}"
                                            weekdays-full="{{ weekdaysFull }}"
@@ -248,18 +255,18 @@
                             <!--technologies and public-->
                             <div class="row">
                                 <div class="col s12 m10" input-field>
-                                    <input type="text" ng-model="project.technologies">
+                                    <input type="text" ng-model="modalProject.technologies">
                                     <label>Technologies</label>
                                 </div>
                                 <div class="col s12 m2" style="padding-top:34px">
                                     <input type="checkbox" class="filled-in" id="filled-in-box"
-                                           ng-model="project.public"/>
+                                           ng-model="modalProject.public"/>
                                     <label for="filled-in-box">Public</label>
                                 </div>
                             </div>
 
                             <!--project links-->
-                            <div class="row" ng-repeat="link in project.links track by $index">
+                            <div class="row" ng-repeat="link in modalProject.links track by $index">
                                 <div class="col s12 m6" input-field>
                                     <input type="text" ng-model="link.title">
                                     <label>Link Title</label>
@@ -289,7 +296,7 @@
                 <!--save/cancel buttons-->
                 <div class="modal-footer">
                     <button class="modal-action waves-effect waves-green btn"
-                            ng-submit="saveProject()" ng-disabled="projectForm.$invalid">save
+                            ng-click="saveProject()" ng-disabled="projectForm.$invalid">save
                     </button>
                     <button class="modal-action modal-close waves-effect waves-green btn-flat">
                         cancel
